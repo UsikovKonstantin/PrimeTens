@@ -15,6 +15,7 @@ namespace WinFormsAppPrimeTens
             Bt_Start.Enabled = true;
         }
         const int exemnum = 100;
+        const int max_num = 2_146_435_070;
         private void ChB_Method_Root_CheckedChanged(object sender, EventArgs e)
         {
             if (ChB_Method_Erat.Checked == false && ChB_Method_Root.Checked == false)
@@ -46,10 +47,20 @@ namespace WinFormsAppPrimeTens
             if (int.TryParse(Tx_Input.Text, out _) == true)
             {
                 Tx_Input.Text = ((int.Parse(Tx_Input.Text) / 10) * 10).ToString();
+                if (int.Parse(Tx_Input.Text) > max_num)
+                {
+                    Tx_Input.Text = max_num.ToString();
+                }
                 if ((int.Parse(Tx_Input.Text) < 10))
                 {
                     Tx_Input.Text = "10";
                 }
+                Bt_Start.Enabled = true;
+                return;
+            }
+            if (double.TryParse(Tx_Input.Text, out _) == true)
+            {
+                Tx_Input.Text = max_num.ToString();
                 Bt_Start.Enabled = true;
             }
             else
@@ -98,7 +109,7 @@ namespace WinFormsAppPrimeTens
             int min_loc = -1, min_count = -1, max_loc = -1, max_count = -1;
             Stopwatch tim = new();
             tim.Start();
-            var tas = Task.Factory.StartNew(async () => await ClassLibraryPrimeTens.PrimeTens.GetMinMaxTens(ClassLibraryPrimeTens.PrimeTens.GetPrimeNumbersEratosthenes(num, ct),ct));
+            var tas = Task.Factory.StartNew(async () => await ClassLibraryPrimeTens.PrimeTens.GetMinMaxTens(ClassLibraryPrimeTens.PrimeTens.GetPrimeNumbersEratosthenes(num, ct), ct));
             while (min_loc == -1)
             {
                 if (tas.Status == TaskStatus.RanToCompletion)
@@ -134,7 +145,7 @@ namespace WinFormsAppPrimeTens
             int min_loc = -1, min_count = -1, max_loc = -1, max_count = -1;
             Stopwatch tim = new();
             tim.Start();
-            var tas = Task.Factory.StartNew(async () => await ClassLibraryPrimeTens.PrimeTens.GetMinMaxTens(ClassLibraryPrimeTens.PrimeTens.GetPrimeNumbersSqrt(num,ct), ct));
+            var tas = Task.Factory.StartNew(async () => await ClassLibraryPrimeTens.PrimeTens.GetMinMaxTens(ClassLibraryPrimeTens.PrimeTens.GetPrimeNumbersSqrt(num, ct), ct));
             while (min_loc == -1)
             {
                 if (tas.Status == TaskStatus.RanToCompletion)
@@ -156,7 +167,7 @@ namespace WinFormsAppPrimeTens
                 }
                 if (ct.IsCancellationRequested)
                 {
-                    return (0,0,0,0,0);
+                    return (0, 0, 0, 0, 0);
                 }
             }
             tim.Stop();

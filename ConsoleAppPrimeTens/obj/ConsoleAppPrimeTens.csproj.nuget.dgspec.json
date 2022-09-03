@@ -11,7 +11,7 @@
         "projectName": "ClassLibraryPrimeTens",
         "projectPath": "C:\\Users\\nydus\\source\\repos\\PrimeTens\\ClassLibraryPrimeTens\\ClassLibraryPrimeTens.csproj",
         "packagesPath": "C:\\Users\\nydus\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\nydus\\Source\\Repos\\PrimeTens\\ClassLibraryPrimeTens\\obj\\",
+        "outputPath": "C:\\Users\\nydus\\source\\repos\\PrimeTens\\ClassLibraryPrimeTens\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

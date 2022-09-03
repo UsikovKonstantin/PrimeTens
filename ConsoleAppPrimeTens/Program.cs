@@ -2,17 +2,18 @@
 using System.Diagnostics;
 
 int n = 1_000_000;
-
+CancellationToken ct = new();
+(int, int, int, int) result;
 Stopwatch sw = Stopwatch.StartNew();
-bool[] nums = PrimeTens.GetPrimeNumbersEratosthenes(n);
-PrimeTens.GetMinMaxTens(nums, out int a, out int b, out int c, out int d);
+bool[] nums = PrimeTens.GetPrimeNumbersEratosthenes(n, ct);
+result = await PrimeTens.GetMinMaxTens(nums, ct);
 sw.Stop();
 Console.WriteLine(sw.ElapsedMilliseconds);
-Console.WriteLine($"{a} {b} {c} {d}");
+Console.WriteLine($"{result.Item1} {result.Item2} {result.Item3} {result.Item4}");
 
 sw.Restart();
-bool[] nums2 = PrimeTens.GetPrimeNumbersSqrt(n);
-PrimeTens.GetMinMaxTens(nums2, out int a2, out int b2, out int c2, out int d2);
+bool[] nums2 = PrimeTens.GetPrimeNumbersSqrt(n, ct);
+result = await PrimeTens.GetMinMaxTens(nums2, ct);
 sw.Stop();
 Console.WriteLine(sw.ElapsedMilliseconds);
-Console.WriteLine($"{a2} {b2} {c2} {d2}");
+Console.WriteLine($"{result.Item1} {result.Item2} {result.Item3} {result.Item4}");
