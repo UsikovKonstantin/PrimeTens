@@ -1,0 +1,12 @@
+F:\Основы_программирования\Курс_2\PrimeTens\ClassLibraryPrimeTens\bin\Debug\net6.0\ClassLibraryPrimeTens.deps.json
+F:\Основы_программирования\Курс_2\PrimeTens\ClassLibraryPrimeTens\bin\Debug\net6.0\ClassLibraryPrimeTens.dll
+F:\Основы_программирования\Курс_2\PrimeTens\ClassLibraryPrimeTens\bin\Debug\net6.0\ClassLibraryPrimeTens.pdb
+F:\Основы_программирования\Курс_2\PrimeTens\ClassLibraryPrimeTens\obj\Debug\net6.0\ClassLibraryPrimeTens.csproj.AssemblyReference.cache
+F:\Основы_программирования\Курс_2\PrimeTens\ClassLibraryPrimeTens\obj\Debug\net6.0\ClassLibraryPrimeTens.GeneratedMSBuildEditorConfig.editorconfig
+F:\Основы_программирования\Курс_2\PrimeTens\ClassLibraryPrimeTens\obj\Debug\net6.0\ClassLibraryPrimeTens.AssemblyInfoInputs.cache
+F:\Основы_программирования\Курс_2\PrimeTens\ClassLibraryPrimeTens\obj\Debug\net6.0\ClassLibraryPrimeTens.AssemblyInfo.cs
+F:\Основы_программирования\Курс_2\PrimeTens\ClassLibraryPrimeTens\obj\Debug\net6.0\ClassLibraryPrimeTens.csproj.CoreCompileInputs.cache
+F:\Основы_программирования\Курс_2\PrimeTens\ClassLibraryPrimeTens\obj\Debug\net6.0\ClassLibraryPrimeTens.dll
+F:\Основы_программирования\Курс_2\PrimeTens\ClassLibraryPrimeTens\obj\Debug\net6.0\refint\ClassLibraryPrimeTens.dll
+F:\Основы_программирования\Курс_2\PrimeTens\ClassLibraryPrimeTens\obj\Debug\net6.0\ClassLibraryPrimeTens.pdb
+F:\Основы_программирования\Курс_2\PrimeTens\ClassLibraryPrimeTens\obj\Debug\net6.0\ref\ClassLibraryPrimeTens.dll

@@ -1,0 +1,36 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v6.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v6.0": {
+      "ConsoleAppPrimeTens/1.0.0": {
+        "dependencies": {
+          "ClassLibraryPrimeTens": "1.0.0"
+        },
+        "runtime": {
+          "ConsoleAppPrimeTens.dll": {}
+        }
+      },
+      "ClassLibraryPrimeTens/1.0.0": {
+        "runtime": {
+          "ClassLibraryPrimeTens.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "ConsoleAppPrimeTens/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "ClassLibraryPrimeTens/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
