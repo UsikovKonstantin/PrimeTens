@@ -46,6 +46,10 @@ namespace WinFormsAppPrimeTens
             if (int.TryParse(Tx_Input.Text, out _) == true)
             {
                 Tx_Input.Text = ((int.Parse(Tx_Input.Text) / 10) * 10).ToString();
+                if ((int.Parse(Tx_Input.Text) < 10))
+                {
+                    Tx_Input.Text = "10";
+                }
                 Bt_Start.Enabled = true;
             }
             else
@@ -83,10 +87,10 @@ namespace WinFormsAppPrimeTens
             Tx_Input.Enabled = true;
             Bt_Start.Enabled = true;
         }
-        async Task<(int min_count, int min_loc, int max_count, int max_loc,long mls)> Start_Erat(CancellationToken ct)
+        async Task<(int min_count, int min_loc, int max_count, int max_loc, long mls)> Start_Erat(CancellationToken ct)
         {
             int num = int.Parse(Tx_Input.Text);
-            int min_loc = -1,min_count = -1,max_loc = -1,max_count = -1;
+            int min_loc = -1, min_count = -1, max_loc = -1, max_count = -1;
             Stopwatch tim = new();
             tim.Start();
             var tas = ClassLibraryPrimeTens.PrimeTens.GetMinMaxTens(ClassLibraryPrimeTens.PrimeTens.GetPrimeNumbersEratosthenes(num));
@@ -109,7 +113,7 @@ namespace WinFormsAppPrimeTens
         async Task<(int min_count, int min_loc, int max_count, int max_loc, long mls)> Start_Root(CancellationToken ct)
         {
             int num = int.Parse(Tx_Input.Text);
-            int min_loc = -1, min_count = -1, max_loc = -1, max_count = -1 ;
+            int min_loc = -1, min_count = -1, max_loc = -1, max_count = -1;
             Stopwatch tim = new();
             tim.Start();
             var tas = ClassLibraryPrimeTens.PrimeTens.GetMinMaxTens(ClassLibraryPrimeTens.PrimeTens.GetPrimeNumbersSqrt(num));
