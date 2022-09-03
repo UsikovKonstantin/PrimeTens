@@ -81,5 +81,45 @@
             return true;
         }
         #endregion
+
+        #region Поиск десятков
+        /// <summary>
+        /// Находит наибольшие десятки чисел, в которых максимальное и минимальное количество простых чисел.
+        /// </summary>
+        /// <param name="prime"> массив булевых значений, указывающих, является ли число простым </param>
+        /// <param name="minRangeStart"> число, являющееся началом десятки с минимальным количеством простых чисел </param>
+        /// <param name="minCount"> минимальное количество делителей в десятке </param>
+        /// <param name="maxRangeStart"> число, являющееся началом десятки с максимальным количеством простых чисел </param>
+        /// <param name="maxCount"> максимальное количество делителей в десятке </param>
+        public static void GetMinMaxTens(bool[] prime, out int minRangeStart, out int minCount, out int maxRangeStart, out int maxCount)
+        {
+            minCount = 10;
+            minRangeStart = -1;
+            maxCount = -1;
+            maxRangeStart = -1;
+
+            for (int i = 1; i < prime.Length; i += 10)
+            {
+                int count = 0;
+                for (int j = i; j < i + 10; j++)
+                {
+                    if (prime[j])
+                    {
+                        count++;
+                    }
+                }
+                if (count <= minCount)
+                {
+                    minCount = count;
+                    minRangeStart = i;
+                }
+                if (count >= maxCount)
+                {
+                    maxCount = count;
+                    maxRangeStart = i;
+                }
+            }
+        }
+        #endregion
     }
 }
