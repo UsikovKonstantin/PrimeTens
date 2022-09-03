@@ -32,11 +32,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "F:\\Programs\\Курс_2\\PrimeTens\\ConsoleAppPrimeTens\\ConsoleAppPrimeTens.csproj",
+      "projectUniqueName": "F:\\Programs\\Курс_2\\ConsoleAppPrimeTens\\ConsoleAppPrimeTens.csproj",
       "projectName": "ConsoleAppPrimeTens",
-      "projectPath": "F:\\Programs\\Курс_2\\PrimeTens\\ConsoleAppPrimeTens\\ConsoleAppPrimeTens.csproj",
+      "projectPath": "F:\\Programs\\Курс_2\\ConsoleAppPrimeTens\\ConsoleAppPrimeTens.csproj",
       "packagesPath": "C:\\Users\\Master\\.nuget\\packages\\",
-      "outputPath": "F:\\Programs\\Курс_2\\PrimeTens\\ConsoleAppPrimeTens\\obj\\",
+      "outputPath": "F:\\Programs\\Курс_2\\ConsoleAppPrimeTens\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Master\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -53,8 +53,8 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "F:\\Programs\\Курс_2\\PrimeTens\\ClassLibraryPrimeTens\\ClassLibraryPrimeTens.csproj": {
-              "projectPath": "F:\\Programs\\Курс_2\\PrimeTens\\ClassLibraryPrimeTens\\ClassLibraryPrimeTens.csproj"
+            "F:\\Programs\\Курс_2\\ClassLibraryPrimeTens\\ClassLibraryPrimeTens.csproj": {
+              "projectPath": "F:\\Programs\\Курс_2\\ClassLibraryPrimeTens\\ClassLibraryPrimeTens.csproj"
             }
           }
         }

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "F:\\Programs\\Курс_2\\PrimeTens\\WinFormsAppPrimeTens\\WinFormsAppPrimeTens.csproj": {}
+    "F:\\Programs\\Курс_2\\WinFormsAppPrimeTens\\WinFormsAppPrimeTens.csproj": {}
   },
   "projects": {
-    "F:\\Programs\\Курс_2\\PrimeTens\\ClassLibraryPrimeTens\\ClassLibraryPrimeTens.csproj": {
+    "F:\\Programs\\Курс_2\\ClassLibraryPrimeTens\\ClassLibraryPrimeTens.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "F:\\Programs\\Курс_2\\PrimeTens\\ClassLibraryPrimeTens\\ClassLibraryPrimeTens.csproj",
+        "projectUniqueName": "F:\\Programs\\Курс_2\\ClassLibraryPrimeTens\\ClassLibraryPrimeTens.csproj",
         "projectName": "ClassLibraryPrimeTens",
-        "projectPath": "F:\\Programs\\Курс_2\\PrimeTens\\ClassLibraryPrimeTens\\ClassLibraryPrimeTens.csproj",
+        "projectPath": "F:\\Programs\\Курс_2\\ClassLibraryPrimeTens\\ClassLibraryPrimeTens.csproj",
         "packagesPath": "C:\\Users\\Master\\.nuget\\packages\\",
-        "outputPath": "F:\\Programs\\Курс_2\\PrimeTens\\ClassLibraryPrimeTens\\obj\\",
+        "outputPath": "F:\\Programs\\Курс_2\\ClassLibraryPrimeTens\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Master\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -58,14 +58,14 @@
         }
       }
     },
-    "F:\\Programs\\Курс_2\\PrimeTens\\WinFormsAppPrimeTens\\WinFormsAppPrimeTens.csproj": {
+    "F:\\Programs\\Курс_2\\WinFormsAppPrimeTens\\WinFormsAppPrimeTens.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "F:\\Programs\\Курс_2\\PrimeTens\\WinFormsAppPrimeTens\\WinFormsAppPrimeTens.csproj",
+        "projectUniqueName": "F:\\Programs\\Курс_2\\WinFormsAppPrimeTens\\WinFormsAppPrimeTens.csproj",
         "projectName": "WinFormsAppPrimeTens",
-        "projectPath": "F:\\Programs\\Курс_2\\PrimeTens\\WinFormsAppPrimeTens\\WinFormsAppPrimeTens.csproj",
+        "projectPath": "F:\\Programs\\Курс_2\\WinFormsAppPrimeTens\\WinFormsAppPrimeTens.csproj",
         "packagesPath": "C:\\Users\\Master\\.nuget\\packages\\",
-        "outputPath": "F:\\Programs\\Курс_2\\PrimeTens\\WinFormsAppPrimeTens\\obj\\",
+        "outputPath": "F:\\Programs\\Курс_2\\WinFormsAppPrimeTens\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Master\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -82,8 +82,8 @@
           "net6.0-windows7.0": {
             "targetAlias": "net6.0-windows",
             "projectReferences": {
-              "F:\\Programs\\Курс_2\\PrimeTens\\ClassLibraryPrimeTens\\ClassLibraryPrimeTens.csproj": {
-                "projectPath": "F:\\Programs\\Курс_2\\PrimeTens\\ClassLibraryPrimeTens\\ClassLibraryPrimeTens.csproj"
+              "F:\\Programs\\Курс_2\\ClassLibraryPrimeTens\\ClassLibraryPrimeTens.csproj": {
+                "projectPath": "F:\\Programs\\Курс_2\\ClassLibraryPrimeTens\\ClassLibraryPrimeTens.csproj"
               }
             }
           }

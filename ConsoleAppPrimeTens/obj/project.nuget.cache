@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "uQxxyeby/s0bHKFlRhqkITZ8sqBExcEQdIqiR3/VRFqgximYFaGCA6xsVqkq58OkLUN+Jf2YnK3ttWanpRHWGg==",
+  "dgSpecHash": "azk7noi4jpa9DlHLcwhoPUg+GSJWRCdtrwdZPfBBEGoZGZ6iaDGlv+hRu3p1G8sqgTgBr7pvpo4/pqLc3Kg7AA==",
   "success": true,
-  "projectFilePath": "F:\\Programs\\Курс_2\\PrimeTens\\ConsoleAppPrimeTens\\ConsoleAppPrimeTens.csproj",
+  "projectFilePath": "F:\\Programs\\Курс_2\\ConsoleAppPrimeTens\\ConsoleAppPrimeTens.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }
