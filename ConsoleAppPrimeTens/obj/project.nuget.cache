@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "azk7noi4jpa9DlHLcwhoPUg+GSJWRCdtrwdZPfBBEGoZGZ6iaDGlv+hRu3p1G8sqgTgBr7pvpo4/pqLc3Kg7AA==",
+  "dgSpecHash": "yM99RootJ0P6ti4tzg42if5RfeB52YN0HhbTNmT05nOTcM6EmJegbZIge5qAtI8byyGip2FG3S5Q/mO1eOE/OA==",
   "success": true,
-  "projectFilePath": "F:\\Programs\\Курс_2\\ConsoleAppPrimeTens\\ConsoleAppPrimeTens.csproj",
+  "projectFilePath": "C:\\Users\\nydus\\source\\repos\\PrimeTens\\ConsoleAppPrimeTens\\ConsoleAppPrimeTens.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

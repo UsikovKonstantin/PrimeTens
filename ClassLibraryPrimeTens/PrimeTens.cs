@@ -91,12 +91,12 @@
         /// <param name="minCount"> минимальное количество делителей в десятке </param>
         /// <param name="maxRangeStart"> число, являющееся началом десятки с максимальным количеством простых чисел </param>
         /// <param name="maxCount"> максимальное количество делителей в десятке </param>
-        public static void GetMinMaxTens(bool[] prime, out int minRangeStart, out int minCount, out int maxRangeStart, out int maxCount)
+        async public static Task<(int,int,int,int)> GetMinMaxTens(bool[] prime)
         {
-            minCount = 10;
-            minRangeStart = -1;
-            maxCount = -1;
-            maxRangeStart = -1;
+            int minCount = 10;
+            int minRangeStart = -1;
+            int maxCount = -1;
+            int maxRangeStart = -1;
 
             for (int i = 1; i < prime.Length; i += 10)
             {
@@ -119,6 +119,7 @@
                     maxRangeStart = i;
                 }
             }
+            return (minCount, minRangeStart, maxCount, maxRangeStart);
         }
         #endregion
     }
