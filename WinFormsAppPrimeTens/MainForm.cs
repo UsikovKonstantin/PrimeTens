@@ -79,6 +79,11 @@ namespace WinFormsAppPrimeTens
             }
             await Cur_run;
             var result = Cur_run.Result;
+            if (result == (0, 0, 0, 0, 0))
+            {
+                Cur_run.Dispose();
+                return;
+            }
             RTx_Output.Text = $"Минимальный десяток {result.min_loc}-{result.min_loc + 9}\nНаименьшее число простых чисел {result.min_count}\nМаксимальный десяток {result.max_loc}-{result.max_loc + 9}\nМаксимальное число простых чисел {result.max_count}\nВремя выполнения {result.mls}мс";
             Bt_End.Enabled = false;
             Bt_Check.Enabled = true;
@@ -93,16 +98,29 @@ namespace WinFormsAppPrimeTens
             int min_loc = -1, min_count = -1, max_loc = -1, max_count = -1;
             Stopwatch tim = new();
             tim.Start();
-            var tas = ClassLibraryPrimeTens.PrimeTens.GetMinMaxTens(ClassLibraryPrimeTens.PrimeTens.GetPrimeNumbersEratosthenes(num));
+            var tas = Task.Factory.StartNew(async () => await ClassLibraryPrimeTens.PrimeTens.GetMinMaxTens(ClassLibraryPrimeTens.PrimeTens.GetPrimeNumbersEratosthenes(num, ct),ct));
             while (min_loc == -1)
             {
                 if (tas.Status == TaskStatus.RanToCompletion)
                 {
-                    (int, int, int, int) temp = tas.Result;
+                    (int, int, int, int) temp = tas.Result.Result;
                     min_count = temp.Item1;
                     min_loc = temp.Item2;
                     max_count = temp.Item3;
                     max_loc = temp.Item4;
+                }
+                else
+                {
+                    if (ct.IsCancellationRequested)
+                    {
+                        return (0, 0, 0, 0, 0);
+                    }
+                    RTx_Output.Invoke(new Action(() => RTx_Output.Text = $"{tim.ElapsedMilliseconds}мс"));
+                    await Task.Delay(10);
+                }
+                if (ct.IsCancellationRequested)
+                {
+                    return (0, 0, 0, 0, 0);
                 }
             }
             tim.Stop();
@@ -116,16 +134,29 @@ namespace WinFormsAppPrimeTens
             int min_loc = -1, min_count = -1, max_loc = -1, max_count = -1;
             Stopwatch tim = new();
             tim.Start();
-            var tas = ClassLibraryPrimeTens.PrimeTens.GetMinMaxTens(ClassLibraryPrimeTens.PrimeTens.GetPrimeNumbersSqrt(num));
+            var tas = Task.Factory.StartNew(async () => await ClassLibraryPrimeTens.PrimeTens.GetMinMaxTens(ClassLibraryPrimeTens.PrimeTens.GetPrimeNumbersSqrt(num,ct), ct));
             while (min_loc == -1)
             {
                 if (tas.Status == TaskStatus.RanToCompletion)
                 {
-                    (int, int, int, int) temp = tas.Result;
+                    (int, int, int, int) temp = tas.Result.Result;
                     min_count = temp.Item1;
                     min_loc = temp.Item2;
                     max_count = temp.Item3;
                     max_loc = temp.Item4;
+                }
+                else
+                {
+                    if (ct.IsCancellationRequested)
+                    {
+                        return (0, 0, 0, 0, 0);
+                    }
+                    RTx_Output.Invoke(new Action(() => RTx_Output.Text = $"{tim.ElapsedMilliseconds}мс"));
+                    await Task.Delay(10);
+                }
+                if (ct.IsCancellationRequested)
+                {
+                    return (0,0,0,0,0);
                 }
             }
             tim.Stop();
@@ -141,6 +172,7 @@ namespace WinFormsAppPrimeTens
             ChB_Method_Root.Enabled = true;
             Tx_Input.Enabled = true;
             Bt_Start.Enabled = true;
+            Cur_cts.Cancel();
         }
 
         private void Tx_Input_TextChanged(object sender, EventArgs e)

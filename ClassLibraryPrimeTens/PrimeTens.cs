@@ -10,13 +10,17 @@
         /// </summary>
         /// <param name="n"> верхняя граница массива </param>
         /// <returns> массив булевых значений, указывающих, является ли число простым </returns>
-        public static bool[] GetPrimeNumbersEratosthenes(int n)
+        public static bool[] GetPrimeNumbersEratosthenes(int n,CancellationToken ct)
         {
             bool[] prime = GetArray(n);
 
             // Просеиваем до корня, оставшиеся числа будут простыми
             for (int i = 2; i <= (int)Math.Sqrt(n); i++)
             {
+                if (ct.IsCancellationRequested)
+                {
+                    return null;
+                }
                 if (prime[i])
                 {
                     // Просеивать начинаем с i*i, т.к. числа кратные i и меньшие i*i мы просеяли на прошлых итерациях
@@ -54,11 +58,15 @@
         /// </summary>
         /// <param name="n"> верхняя граница массива </param>
         /// <returns> массив булевых значений, указывающих, является ли число простым </returns>
-        public static bool[] GetPrimeNumbersSqrt(int n)
+        public static bool[] GetPrimeNumbersSqrt(int n,CancellationToken ct)
         {
             bool[] prime = new bool[n + 1];
             for (int i = 2; i <= n; i++)
             {
+                if (ct.IsCancellationRequested)
+                {
+                    return null;
+                }
                 prime[i] = IsPrime(i);
             }
             return prime;
@@ -91,15 +99,22 @@
         /// <param name="minCount"> минимальное количество делителей в десятке </param>
         /// <param name="maxRangeStart"> число, являющееся началом десятки с максимальным количеством простых чисел </param>
         /// <param name="maxCount"> максимальное количество делителей в десятке </param>
-        async public static Task<(int,int,int,int)> GetMinMaxTens(bool[] prime)
+        async public static Task<(int minCount, int minRangeStart, int maxCount, int maxRangeStart)> GetMinMaxTens(bool[] prime,CancellationToken ct)
         {
             int minCount = 10;
             int minRangeStart = -1;
             int maxCount = -1;
             int maxRangeStart = -1;
-
+            if (ct.IsCancellationRequested)
+            {
+                return (0,0,0,0);
+            }
             for (int i = 1; i < prime.Length; i += 10)
             {
+                if (ct.IsCancellationRequested)
+                {
+                    return (0,0,0,0);
+                }
                 int count = 0;
                 for (int j = i; j < i + 10; j++)
                 {
