@@ -27,24 +27,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\nydus\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "C:\\Users\\Master\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\nydus\\source\\repos\\PrimeTens\\ConsoleAppPrimeTens\\ConsoleAppPrimeTens.csproj",
+      "projectUniqueName": "F:\\Programs\\Курс_2\\ConsoleAppPrimeTens\\ConsoleAppPrimeTens.csproj",
       "projectName": "ConsoleAppPrimeTens",
-      "projectPath": "C:\\Users\\nydus\\source\\repos\\PrimeTens\\ConsoleAppPrimeTens\\ConsoleAppPrimeTens.csproj",
-      "packagesPath": "C:\\Users\\nydus\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\nydus\\source\\repos\\PrimeTens\\ConsoleAppPrimeTens\\obj\\",
+      "projectPath": "F:\\Programs\\Курс_2\\ConsoleAppPrimeTens\\ConsoleAppPrimeTens.csproj",
+      "packagesPath": "C:\\Users\\Master\\.nuget\\packages\\",
+      "outputPath": "F:\\Programs\\Курс_2\\ConsoleAppPrimeTens\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-      ],
       "configFilePaths": [
-        "C:\\Users\\nydus\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Users\\Master\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -52,15 +47,14 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "C:\\Users\\nydus\\source\\repos\\PrimeTens\\ClassLibraryPrimeTens\\ClassLibraryPrimeTens.csproj": {
-              "projectPath": "C:\\Users\\nydus\\source\\repos\\PrimeTens\\ClassLibraryPrimeTens\\ClassLibraryPrimeTens.csproj"
+            "F:\\Programs\\Курс_2\\ClassLibraryPrimeTens\\ClassLibraryPrimeTens.csproj": {
+              "projectPath": "F:\\Programs\\Курс_2\\ClassLibraryPrimeTens\\ClassLibraryPrimeTens.csproj"
             }
           }
         }
@@ -80,8 +74,7 @@
           "net47",
           "net471",
           "net472",
-          "net48",
-          "net481"
+          "net48"
         ],
         "assetTargetFallback": true,
         "warn": true,
@@ -90,7 +83,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.400\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.203\\RuntimeIdentifierGraph.json"
       }
     }
   }

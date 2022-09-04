@@ -10,7 +10,7 @@
         /// </summary>
         /// <param name="n"> верхняя граница массива </param>
         /// <returns> массив булевых значений, указывающих, является ли число простым </returns>
-        public static bool[] GetPrimeNumbersEratosthenes(int n,CancellationToken ct)
+        public static bool[] GetPrimeNumbersEratosthenes(int n, CancellationToken ct)
         {
             bool[] prime = GetArray(n);
 
@@ -58,7 +58,7 @@
         /// </summary>
         /// <param name="n"> верхняя граница массива </param>
         /// <returns> массив булевых значений, указывающих, является ли число простым </returns>
-        public static bool[] GetPrimeNumbersSqrt(int n,CancellationToken ct)
+        public static bool[] GetPrimeNumbersSqrt(int n, CancellationToken ct)
         {
             bool[] prime = new bool[n + 1];
             for (int i = 2; i <= n; i++)
@@ -99,16 +99,12 @@
         /// <param name="minCount"> минимальное количество делителей в десятке </param>
         /// <param name="maxRangeStart"> число, являющееся началом десятки с максимальным количеством простых чисел </param>
         /// <param name="maxCount"> максимальное количество делителей в десятке </param>
-        async public static Task<(int minCount, int minRangeStart, int maxCount, int maxRangeStart)> GetMinMaxTens(bool[] prime,CancellationToken ct)
+        public static (int minCount, int minRangeStart, int maxCount, int maxRangeStart) GetMinMaxTens(bool[] prime, CancellationToken ct)
         {
             int minCount = 10;
             int minRangeStart = -1;
             int maxCount = -1;
             int maxRangeStart = -1;
-            if (ct.IsCancellationRequested)
-            {
-                return (0,0,0,0);
-            }
             for (int i = 1; i < prime.Length; i += 10)
             {
                 if (ct.IsCancellationRequested)
