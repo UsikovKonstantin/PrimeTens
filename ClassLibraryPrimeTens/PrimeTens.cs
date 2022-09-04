@@ -106,6 +106,10 @@ namespace ClassLibraryPrimeTens
             int minRangeStart = -1;
             int maxCount = -1;
             int maxRangeStart = -1;
+            if (ct.IsCancellationRequested)
+            {
+                return (0, 0, 0, 0);
+            }
             for (int i = 1; i < prime.Length; i += 10)
             {
                 if (ct.IsCancellationRequested)
