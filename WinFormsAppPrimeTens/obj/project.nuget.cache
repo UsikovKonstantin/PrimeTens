@@ -1,8 +1,12 @@
 {
   "version": 2,
+<<<<<<< HEAD
   "dgSpecHash": "nlmStCLC8WPvJ6wJG8KOfZsQI+21Ggi4IyYuf2nsEt8R4v8h/FIOkYsU3XJCPpFAnnp7jCxWZGnoz9c5x2torA==",
+=======
+  "dgSpecHash": "YBtcqilH8qB9nBecjZs9QYvXuiPNPSTWLRytllHZeLiIYdjCxsm63T9XhcMwglLiZLFy2KtZ/Kawv1wOJuwWHg==",
+>>>>>>> 123
   "success": true,
-  "projectFilePath": "C:\\Users\\nydus\\source\\repos\\PrimeTens\\WinFormsAppPrimeTens\\WinFormsAppPrimeTens.csproj",
+  "projectFilePath": "F:\\Programs\\Курс_2\\WinFormsAppPrimeTens\\WinFormsAppPrimeTens.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

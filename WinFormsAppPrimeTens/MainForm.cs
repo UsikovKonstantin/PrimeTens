@@ -82,11 +82,11 @@ namespace WinFormsAppPrimeTens
             Cur_cts = new();
             if (ChB_Method_Erat.Checked)
             {
-                Cur_run = Task.Run(async () => await Start_Erat(Cur_cts.Token));
+                Cur_run = Task.Run(() => Start_Erat(Cur_cts.Token));
             }
             else
             {
-                Cur_run = Task.Run(async () => await Start_Root(Cur_cts.Token));
+                Cur_run = Task.Run(() => Start_Root(Cur_cts.Token));
             }
             await Cur_run;
             var result = Cur_run.Result;
@@ -109,12 +109,12 @@ namespace WinFormsAppPrimeTens
             int min_loc = -1, min_count = -1, max_loc = -1, max_count = -1;
             Stopwatch tim = new();
             tim.Start();
-            var tas = Task.Factory.StartNew(async () => await ClassLibraryPrimeTens.PrimeTens.GetMinMaxTens(ClassLibraryPrimeTens.PrimeTens.GetPrimeNumbersEratosthenes(num, ct), ct));
+            var tas = Task.Factory.StartNew(() => ClassLibraryPrimeTens.PrimeTens.GetMinMaxTens(ClassLibraryPrimeTens.PrimeTens.GetPrimeNumbersEratosthenes(num, ct),ct));
             while (min_loc == -1)
             {
                 if (tas.Status == TaskStatus.RanToCompletion)
                 {
-                    (int, int, int, int) temp = tas.Result.Result;
+                    (int, int, int, int) temp = tas.Result;
                     min_count = temp.Item1;
                     min_loc = temp.Item2;
                     max_count = temp.Item3;
@@ -145,12 +145,12 @@ namespace WinFormsAppPrimeTens
             int min_loc = -1, min_count = -1, max_loc = -1, max_count = -1;
             Stopwatch tim = new();
             tim.Start();
-            var tas = Task.Factory.StartNew(async () => await ClassLibraryPrimeTens.PrimeTens.GetMinMaxTens(ClassLibraryPrimeTens.PrimeTens.GetPrimeNumbersSqrt(num, ct), ct));
+            var tas = Task.Factory.StartNew(() => ClassLibraryPrimeTens.PrimeTens.GetMinMaxTens(ClassLibraryPrimeTens.PrimeTens.GetPrimeNumbersSqrt(num,ct), ct));
             while (min_loc == -1)
             {
                 if (tas.Status == TaskStatus.RanToCompletion)
                 {
-                    (int, int, int, int) temp = tas.Result.Result;
+                    (int, int, int, int) temp = tas.Result;
                     min_count = temp.Item1;
                     min_loc = temp.Item2;
                     max_count = temp.Item3;

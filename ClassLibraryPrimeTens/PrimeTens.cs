@@ -99,7 +99,7 @@
         /// <param name="minCount"> минимальное количество делителей в десятке </param>
         /// <param name="maxRangeStart"> число, являющееся началом десятки с максимальным количеством простых чисел </param>
         /// <param name="maxCount"> максимальное количество делителей в десятке </param>
-        async public static Task<(int minCount, int minRangeStart, int maxCount, int maxRangeStart)> GetMinMaxTens(bool[] prime, CancellationToken ct)
+        public static (int minCount, int minRangeStart, int maxCount, int maxRangeStart) GetMinMaxTens(bool[] prime, CancellationToken ct)
         {
             int minCount = 10;
             int minRangeStart = -1;
