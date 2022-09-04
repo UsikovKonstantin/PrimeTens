@@ -1,4 +1,6 @@
-﻿namespace ClassLibraryPrimeTens
+﻿using System.Collections;
+
+namespace ClassLibraryPrimeTens
 {
     public static class PrimeTens
     {
@@ -10,9 +12,9 @@
         /// </summary>
         /// <param name="n"> верхняя граница массива </param>
         /// <returns> массив булевых значений, указывающих, является ли число простым </returns>
-        public static bool[] GetPrimeNumbersEratosthenes(int n, CancellationToken ct)
+        public static BitArray GetPrimeNumbersEratosthenes(int n, CancellationToken ct)
         {
-            bool[] prime = GetArray(n);
+            BitArray prime = GetArray(n);
 
             // Просеиваем до корня, оставшиеся числа будут простыми
             for (int i = 2; i <= (int)Math.Sqrt(n); i++)
@@ -39,13 +41,12 @@
         /// </summary>
         /// <param name="n"> верхняя граница массива </param>
         /// <returns> массив булевых значений </returns>
-        public static bool[] GetArray(int n)
+        public static BitArray GetArray(int n)
         {
-            bool[] arr = new bool[n + 1];
-            for (int i = 2; i <= n; i++)
-            {
-                arr[i] = true;
-            }
+            BitArray arr = new BitArray(n + 1);
+            arr.SetAll(true);
+            arr[0] = false;
+            arr[1] = false;
             return arr;
         }
         #endregion
@@ -58,9 +59,9 @@
         /// </summary>
         /// <param name="n"> верхняя граница массива </param>
         /// <returns> массив булевых значений, указывающих, является ли число простым </returns>
-        public static bool[] GetPrimeNumbersSqrt(int n, CancellationToken ct)
+        public static BitArray GetPrimeNumbersSqrt(int n, CancellationToken ct)
         {
-            bool[] prime = new bool[n + 1];
+            BitArray prime = new BitArray(n + 1);
             for (int i = 2; i <= n; i++)
             {
                 if (ct.IsCancellationRequested)
@@ -99,16 +100,12 @@
         /// <param name="minCount"> минимальное количество делителей в десятке </param>
         /// <param name="maxRangeStart"> число, являющееся началом десятки с максимальным количеством простых чисел </param>
         /// <param name="maxCount"> максимальное количество делителей в десятке </param>
-        public static (int minCount, int minRangeStart, int maxCount, int maxRangeStart) GetMinMaxTens(bool[] prime, CancellationToken ct)
+        public static (int minCount, int minRangeStart, int maxCount, int maxRangeStart) GetMinMaxTens(BitArray prime, CancellationToken ct)
         {
             int minCount = 10;
             int minRangeStart = -1;
             int maxCount = -1;
             int maxRangeStart = -1;
-            if (ct.IsCancellationRequested)
-            {
-                return (0, 0, 0, 0);
-            }
             for (int i = 1; i < prime.Length; i += 10)
             {
                 if (ct.IsCancellationRequested)
