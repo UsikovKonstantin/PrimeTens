@@ -11,6 +11,7 @@ namespace ClassLibraryPrimeTens
         /// Пример: prime[2] = true, prime[3] = true, prime[4] = false, prime[5] = true.
         /// </summary>
         /// <param name="n"> верхняя граница массива </param>
+        /// <param name="ct"> для отмены метода </param>
         /// <returns> массив булевых значений, указывающих, является ли число простым </returns>
         public static BitArray GetPrimeNumbersEratosthenes(int n, CancellationToken ct)
         {
@@ -26,7 +27,7 @@ namespace ClassLibraryPrimeTens
                 if (prime[i])
                 {
                     // Просеивать начинаем с i*i, т.к. числа кратные i и меньшие i*i мы просеяли на прошлых итерациях
-                    for (int j = i * i; j <= n; j += i)
+                    for (int j = i * i; j <= n && j > 0; j += i)
                     {
                         prime[j] = false;
                     }
@@ -102,10 +103,7 @@ namespace ClassLibraryPrimeTens
         /// <param name="maxCount"> максимальное количество делителей в десятке </param>
         public static (int minCount, int minRangeStart, int maxCount, int maxRangeStart) GetMinMaxTens(BitArray prime, CancellationToken ct)
         {
-            int minCount = 10;
-            int minRangeStart = -1;
-            int maxCount = -1;
-            int maxRangeStart = -1;
+            int minCount = 10, minRangeStart = -1, maxCount = -1, maxRangeStart = -1;
             if (ct.IsCancellationRequested)
             {
                 return (0, 0, 0, 0);
@@ -136,6 +134,68 @@ namespace ClassLibraryPrimeTens
                 }
             }
             return (minCount, minRangeStart, maxCount, maxRangeStart);
+        }
+        #endregion
+
+        #region Задачи
+        /// <summary>
+        /// Возвращает список делителей числа.
+        /// </summary>
+        /// <param name="n"> число для поиска делителей </param>
+        /// <returns> список делителей, кроме базовых </returns>
+        public static List<int> FindDivisors(int n)
+        {
+            List<int> res = new List<int>();
+            int sqrt = (int)Math.Sqrt(n);
+            if (sqrt * sqrt == n && n != 1 && n != 0)
+            {
+                res.Add(sqrt);
+                sqrt--;
+            }
+            for (int i = 2; i <= sqrt && i > 0; i++)
+            {
+                if (n % i == 0)
+                {
+                    res.Add(i);
+                    res.Add(n / i);
+                }
+            }
+            res.Sort();
+            return res;
+        }
+
+        /// <summary>
+        /// Находит наибольший отрезок от 1 до n, где нет простых чисел.
+        /// </summary>
+        /// <param name="n"> верхняя граница поиска </param>
+        /// <returns> кортеж из двух чисел, start - начало отрезка, end - конец отрезка</returns>
+        public static (int start, int end) FindMaxRangeWithoutPrimeNumbers(int n)
+        {
+            int count = 0, maxCount = 0, start = 0, end = 0;
+            BitArray prime = GetPrimeNumbersEratosthenes(n, new CancellationToken());
+            for (int i = 2; i <= n; i++)
+            {
+                if (!prime[i])
+                {
+                    count++;
+                }
+                else
+                {
+                    if (count >= maxCount && count != 0)
+                    {
+                        maxCount = count;
+                        end = i - 1;
+                        start = i - count;
+                    }
+                    count = 0;
+                }
+            }
+            if (count >= maxCount && count != 0)
+            {
+                end = n;
+                start = n - count + 1;
+            }
+            return (start, end);
         }
         #endregion
     }

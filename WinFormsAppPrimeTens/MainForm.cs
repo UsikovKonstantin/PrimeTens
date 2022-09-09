@@ -15,7 +15,7 @@ namespace WinFormsAppPrimeTens
             Bt_Start.Enabled = true;
         }
         const int exemnum = 100;
-        const int max_num = 2_146_435_070;
+        const int max_num = int.MaxValue - int.MaxValue % 10;
         private void ChB_Method_Root_CheckedChanged(object sender, EventArgs e)
         {
             if (ChB_Method_Erat.Checked == false && ChB_Method_Root.Checked == false)

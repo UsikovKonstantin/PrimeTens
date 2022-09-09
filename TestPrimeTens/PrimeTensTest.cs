@@ -2,6 +2,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Threading;
 using ClassLibraryPrimeTens;
 using System.Collections;
+using System.Collections.Generic;
 
 namespace TestPrimeTens
 {
@@ -73,6 +74,42 @@ namespace TestPrimeTens
             Assert.IsTrue(result.Item2 == 99951);
             Assert.IsTrue(result.Item3 == 4);
             Assert.IsTrue(result.Item4 == 99131);
+        }
+
+        [TestMethod]
+        public void TestFindDivisors()
+        {
+            int x = 24;
+            List<int> list = PrimeTens.FindDivisors(x);
+            List<int> list2 = new List<int>{ 2, 3, 4, 6, 8, 12 };
+            CollectionAssert.AreEqual(list, list2);
+        }
+
+        [TestMethod]
+        public void TestFindDivisors2()
+        {
+            int x = 29;
+            List<int> list = PrimeTens.FindDivisors(x);
+            List<int> list2 = new List<int> { };
+            CollectionAssert.AreEqual(list, list2);
+        }
+
+        [TestMethod]
+        public void TestFindDivisors3()
+        {
+            int x = 100;
+            List<int> list = PrimeTens.FindDivisors(x);
+            List<int> list2 = new List<int> { 2, 4, 5, 10, 20, 25, 50 };
+            CollectionAssert.AreEqual(list, list2);
+        }
+
+        [TestMethod]
+        public void TestFindMaxRangeWithoutPrimeNumbers()
+        {
+            int x = 10;
+            var res = PrimeTens.FindMaxRangeWithoutPrimeNumbers(x);
+            var res2 = (8, 10);
+            Assert.AreEqual(res, res2);
         }
     }
 }
