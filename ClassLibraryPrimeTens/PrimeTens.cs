@@ -11,7 +11,7 @@ namespace ClassLibraryPrimeTens
         /// Пример: prime[2] = true, prime[3] = true, prime[4] = false, prime[5] = true.
         /// </summary>
         /// <param name="n"> верхняя граница массива </param>
-        /// <param name="ct"> для отмены метода </param>
+        /// <param name="ct"> переменная, с помощью которой можно досрочно завершить выполнение метода </param>
         /// <returns> массив булевых значений, указывающих, является ли число простым </returns>
         public static BitArray GetPrimeNumbersEratosthenes(int n, CancellationToken ct)
         {
@@ -59,6 +59,7 @@ namespace ClassLibraryPrimeTens
         /// Пример: prime[2] = true, prime[3] = true, prime[4] = false, prime[5] = true.
         /// </summary>
         /// <param name="n"> верхняя граница массива </param>
+        /// <param name="ct"> переменная, с помощью которой можно досрочно завершить выполнение метода </param>
         /// <returns> массив булевых значений, указывающих, является ли число простым </returns>
         public static BitArray GetPrimeNumbersSqrt(int n, CancellationToken ct)
         {
@@ -97,10 +98,13 @@ namespace ClassLibraryPrimeTens
         /// Находит наибольшие десятки чисел, в которых максимальное и минимальное количество простых чисел.
         /// </summary>
         /// <param name="prime"> массив булевых значений, указывающих, является ли число простым </param>
-        /// <param name="minRangeStart"> число, являющееся началом десятки с минимальным количеством простых чисел </param>
-        /// <param name="minCount"> минимальное количество делителей в десятке </param>
-        /// <param name="maxRangeStart"> число, являющееся началом десятки с максимальным количеством простых чисел </param>
-        /// <param name="maxCount"> максимальное количество делителей в десятке </param>
+        /// <param name="ct"> переменная, с помощью которой можно досрочно завершить выполнение метода </param>
+        /// <returns> кортеж из четырёх элементов: 
+        /// minCount - минимальное количество простых чисел в десятке
+        /// minRangeStart - число, являющееся началом десятки с минимальным количеством простых чисел
+        /// maxCount - максимальное количество простых чисел в десятке
+        /// maxRangeStart - число, являющееся началом десятки с максимальным количеством простых чисел
+        /// </returns>
         public static (int minCount, int minRangeStart, int maxCount, int maxRangeStart) GetMinMaxTens(BitArray prime, CancellationToken ct)
         {
             int minCount = 10, minRangeStart = -1, maxCount = -1, maxRangeStart = -1;
