@@ -28,10 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
-            this.Tx_Input = new System.Windows.Forms.TextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
@@ -43,25 +41,35 @@
             this.Bt_End = new System.Windows.Forms.Button();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.RTx_Output = new System.Windows.Forms.RichTextBox();
+            this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
+            this.Tx_Input = new System.Windows.Forms.TextBox();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
             this.tableLayoutPanel1.SuspendLayout();
-            this.groupBox1.SuspendLayout();
-            this.tableLayoutPanel4.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
             this.groupBox4.SuspendLayout();
+            this.tableLayoutPanel6.SuspendLayout();
+            this.groupBox1.SuspendLayout();
+            this.tableLayoutPanel5.SuspendLayout();
+            this.groupBox5.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
             // 
             this.tableLayoutPanel1.ColumnCount = 1;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Controls.Add(this.groupBox1, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.groupBox2, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.groupBox3, 0, 2);
             this.tableLayoutPanel1.Controls.Add(this.groupBox4, 0, 3);
+            this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel6, 0, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -70,44 +78,8 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33334F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33334F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 110F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(797, 450);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(800, 450);
             this.tableLayoutPanel1.TabIndex = 0;
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.tableLayoutPanel4);
-            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox1.Location = new System.Drawing.Point(3, 3);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(791, 107);
-            this.groupBox1.TabIndex = 0;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Ввод";
-            // 
-            // tableLayoutPanel4
-            // 
-            this.tableLayoutPanel4.ColumnCount = 1;
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel4.Controls.Add(this.Tx_Input, 0, 0);
-            this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel4.Location = new System.Drawing.Point(3, 19);
-            this.tableLayoutPanel4.Name = "tableLayoutPanel4";
-            this.tableLayoutPanel4.RowCount = 2;
-            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel4.Size = new System.Drawing.Size(785, 85);
-            this.tableLayoutPanel4.TabIndex = 1;
-            // 
-            // Tx_Input
-            // 
-            this.Tx_Input.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.Tx_Input.Location = new System.Drawing.Point(3, 16);
-            this.Tx_Input.MaxLength = 11;
-            this.Tx_Input.Name = "Tx_Input";
-            this.Tx_Input.Size = new System.Drawing.Size(779, 23);
-            this.Tx_Input.TabIndex = 0;
-            this.Tx_Input.Text = "100";
             // 
             // groupBox2
             // 
@@ -115,7 +87,7 @@
             this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox2.Location = new System.Drawing.Point(3, 116);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(791, 107);
+            this.groupBox2.Size = new System.Drawing.Size(794, 107);
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Опции";
@@ -132,7 +104,7 @@
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(785, 85);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(788, 85);
             this.tableLayoutPanel2.TabIndex = 0;
             // 
             // flowLayoutPanel1
@@ -142,7 +114,7 @@
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 30);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(779, 24);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(782, 24);
             this.flowLayoutPanel1.TabIndex = 0;
             // 
             // RB_Method_Erat
@@ -176,7 +148,7 @@
             this.groupBox3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox3.Location = new System.Drawing.Point(3, 229);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(791, 107);
+            this.groupBox3.Size = new System.Drawing.Size(794, 107);
             this.groupBox3.TabIndex = 2;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Управление";
@@ -193,7 +165,7 @@
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 1;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(785, 85);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(788, 85);
             this.tableLayoutPanel3.TabIndex = 1;
             // 
             // Bt_Start
@@ -201,7 +173,7 @@
             this.Bt_Start.Dock = System.Windows.Forms.DockStyle.Fill;
             this.Bt_Start.Location = new System.Drawing.Point(3, 3);
             this.Bt_Start.Name = "Bt_Start";
-            this.Bt_Start.Size = new System.Drawing.Size(386, 79);
+            this.Bt_Start.Size = new System.Drawing.Size(388, 79);
             this.Bt_Start.TabIndex = 1;
             this.Bt_Start.Text = "Начать";
             this.Bt_Start.UseVisualStyleBackColor = true;
@@ -211,9 +183,9 @@
             // 
             this.Bt_End.Dock = System.Windows.Forms.DockStyle.Fill;
             this.Bt_End.Enabled = false;
-            this.Bt_End.Location = new System.Drawing.Point(395, 3);
+            this.Bt_End.Location = new System.Drawing.Point(397, 3);
             this.Bt_End.Name = "Bt_End";
-            this.Bt_End.Size = new System.Drawing.Size(387, 79);
+            this.Bt_End.Size = new System.Drawing.Size(388, 79);
             this.Bt_End.TabIndex = 2;
             this.Bt_End.Text = "Прервать";
             this.Bt_End.UseVisualStyleBackColor = true;
@@ -225,7 +197,7 @@
             this.groupBox4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox4.Location = new System.Drawing.Point(3, 342);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(791, 105);
+            this.groupBox4.Size = new System.Drawing.Size(794, 105);
             this.groupBox4.TabIndex = 3;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Вывод";
@@ -236,9 +208,90 @@
             this.RTx_Output.Location = new System.Drawing.Point(3, 19);
             this.RTx_Output.Name = "RTx_Output";
             this.RTx_Output.ReadOnly = true;
-            this.RTx_Output.Size = new System.Drawing.Size(785, 83);
+            this.RTx_Output.Size = new System.Drawing.Size(788, 83);
             this.RTx_Output.TabIndex = 0;
             this.RTx_Output.Text = "";
+            // 
+            // tableLayoutPanel6
+            // 
+            this.tableLayoutPanel6.ColumnCount = 2;
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 250F));
+            this.tableLayoutPanel6.Controls.Add(this.groupBox1, 0, 0);
+            this.tableLayoutPanel6.Controls.Add(this.groupBox5, 1, 0);
+            this.tableLayoutPanel6.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel6.Location = new System.Drawing.Point(3, 3);
+            this.tableLayoutPanel6.Name = "tableLayoutPanel6";
+            this.tableLayoutPanel6.RowCount = 1;
+            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel6.Size = new System.Drawing.Size(794, 107);
+            this.tableLayoutPanel6.TabIndex = 4;
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.tableLayoutPanel5);
+            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox1.Location = new System.Drawing.Point(3, 3);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(538, 101);
+            this.groupBox1.TabIndex = 0;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Ввод";
+            // 
+            // tableLayoutPanel5
+            // 
+            this.tableLayoutPanel5.ColumnCount = 1;
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel5.Controls.Add(this.Tx_Input, 0, 1);
+            this.tableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel5.Location = new System.Drawing.Point(3, 19);
+            this.tableLayoutPanel5.Name = "tableLayoutPanel5";
+            this.tableLayoutPanel5.RowCount = 3;
+            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel5.Size = new System.Drawing.Size(532, 79);
+            this.tableLayoutPanel5.TabIndex = 0;
+            // 
+            // Tx_Input
+            // 
+            this.Tx_Input.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.Tx_Input.Location = new System.Drawing.Point(3, 27);
+            this.Tx_Input.Margin = new System.Windows.Forms.Padding(3, 3, 20, 3);
+            this.Tx_Input.MaxLength = 11;
+            this.Tx_Input.Name = "Tx_Input";
+            this.Tx_Input.Size = new System.Drawing.Size(509, 23);
+            this.Tx_Input.TabIndex = 0;
+            this.Tx_Input.Text = "100";
+            this.Tx_Input.TextChanged += new System.EventHandler(this.Tx_Input_TextChanged);
+            // 
+            // groupBox5
+            // 
+            this.groupBox5.Controls.Add(this.label1);
+            this.groupBox5.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox5.Location = new System.Drawing.Point(547, 3);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(244, 101);
+            this.groupBox5.TabIndex = 1;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "Справка";
+            // 
+            // label1
+            // 
+            this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label1.Location = new System.Drawing.Point(3, 19);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(238, 79);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "Поиск наибольших десятков в диапазоне [2, n] с минимальным и максимальным количес" +
+    "твом простых чисел.\r\nВходные данные: натуральное число n, кратное 10 в диапазоне" +
+    " [10, 2147483640].";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // errorProvider
+            // 
+            this.errorProvider.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
+            this.errorProvider.ContainerControl = this;
             // 
             // MainForm
             // 
@@ -246,13 +299,10 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.tableLayoutPanel1);
-            this.MinimumSize = new System.Drawing.Size(337, 321);
+            this.MinimumSize = new System.Drawing.Size(402, 478);
             this.Name = "MainForm";
             this.Text = "PrimeTens";
             this.tableLayoutPanel1.ResumeLayout(false);
-            this.groupBox1.ResumeLayout(false);
-            this.tableLayoutPanel4.ResumeLayout(false);
-            this.tableLayoutPanel4.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
             this.flowLayoutPanel1.ResumeLayout(false);
@@ -260,6 +310,12 @@
             this.groupBox3.ResumeLayout(false);
             this.tableLayoutPanel3.ResumeLayout(false);
             this.groupBox4.ResumeLayout(false);
+            this.tableLayoutPanel6.ResumeLayout(false);
+            this.groupBox1.ResumeLayout(false);
+            this.tableLayoutPanel5.ResumeLayout(false);
+            this.tableLayoutPanel5.PerformLayout();
+            this.groupBox5.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -271,7 +327,6 @@
         private GroupBox groupBox3;
         private GroupBox groupBox4;
         private TableLayoutPanel tableLayoutPanel3;
-        private TableLayoutPanel tableLayoutPanel4;
         private TextBox Tx_Input;
         private Button Bt_Start;
         private RichTextBox RTx_Output;
@@ -281,5 +336,10 @@
         private RadioButton RB_Method_Erat;
         private RadioButton RB_Method_Root;
         private Button Bt_End;
+        private ErrorProvider errorProvider;
+        private TableLayoutPanel tableLayoutPanel5;
+        private Label label1;
+        private TableLayoutPanel tableLayoutPanel6;
+        private GroupBox groupBox5;
     }
 }

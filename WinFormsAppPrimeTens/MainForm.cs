@@ -9,7 +9,6 @@ namespace WinFormsAppPrimeTens
             InitializeComponent();
         }
 
-        const int exemnum = 100;
         const int min_num = 10;
         const int max_num = int.MaxValue - int.MaxValue % 10;
 
@@ -18,36 +17,6 @@ namespace WinFormsAppPrimeTens
 
         private async void Bt_Start_Click(object sender, EventArgs e)
         {
-            if (int.TryParse(Tx_Input.Text, out int n))
-            {
-                int nRound = n - n % 10;
-                if (nRound > max_num)
-                {
-                    Tx_Input.Text = max_num.ToString();
-                    return;
-                }
-                if (nRound < min_num)
-                {
-                    Tx_Input.Text = min_num.ToString();
-                    return;
-                }
-                if (n != nRound)
-                {
-                    Tx_Input.Text = nRound.ToString();
-                    return;
-                }
-            }
-            else if (long.TryParse(Tx_Input.Text, out long x))
-            {
-                Tx_Input.Text = max_num.ToString();
-                return;
-            }
-            else
-            {
-                Tx_Input.Text = exemnum.ToString();
-                return;
-            }
-
             SetControls(true);
             Cur_cts = new CancellationTokenSource();
             if (RB_Method_Erat.Checked)
@@ -158,6 +127,46 @@ namespace WinFormsAppPrimeTens
             RB_Method_Root.Enabled = !isTaskRunning;
             Tx_Input.Enabled = !isTaskRunning;
             Bt_Start.Enabled = !isTaskRunning;
+        }
+
+        private void Tx_Input_TextChanged(object sender, EventArgs e)
+        {
+            if (int.TryParse(Tx_Input.Text, out int n))
+            {
+                int nRound = n - n % 10;
+                if (nRound > max_num)
+                {
+                    errorProvider.SetError(Tx_Input, "Слишком большое число");
+                    Bt_Start.Enabled = false;
+                    return;
+                }
+                if (nRound < min_num)
+                {
+                    errorProvider.SetError(Tx_Input, "Слишком маленькое число");
+                    Bt_Start.Enabled = false;
+                    return;
+                }
+                if (n != nRound)
+                {
+                    errorProvider.SetError(Tx_Input, "Число должно оканчиваться на 0");
+                    Bt_Start.Enabled = false;
+                    return;
+                }
+                errorProvider.Clear();
+                Bt_Start.Enabled = true;
+            }
+            else if (long.TryParse(Tx_Input.Text, out long _))
+            {
+                errorProvider.SetError(Tx_Input, "Слишком большое число");
+                Bt_Start.Enabled = false;
+                return;
+            }
+            else
+            {
+                errorProvider.SetError(Tx_Input, "Нельзя привести к целому числу");
+                Bt_Start.Enabled = false;
+                return;
+            }
         }
     }
 }
