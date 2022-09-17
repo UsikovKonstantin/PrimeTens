@@ -21,11 +21,11 @@ namespace WinFormsAppPrimeTens
             Cur_cts = new CancellationTokenSource();
             if (RB_Method_Erat.Checked)
             {
-                Cur_run = Task.Run(() => Start_Erat(Cur_cts.Token));
+                Cur_run = Task.Run(() => Start_Lookup(Cur_cts.Token,Prime_Method.Erathosphenes));
             }
             else
             {
-                Cur_run = Task.Run(() => Start_Root(Cur_cts.Token));
+                Cur_run = Task.Run(() => Start_Lookup(Cur_cts.Token,Prime_Method.Division_Lookup));
             }
             await Cur_run;
             var result = Cur_run.Result;
@@ -41,59 +41,35 @@ namespace WinFormsAppPrimeTens
                 $"Время выполнения {result.mls}мс";
             SetControls(false);
         }
-
-        (int min_count, int min_loc, int max_count, int max_loc, long mls) Start_Erat(CancellationToken ct)
+        enum Prime_Method
         {
-            int num = int.Parse(Tx_Input.Text);
-            int min_loc = -1, min_count = -1, max_loc = -1, max_count = -1;
-            Stopwatch tim = new Stopwatch();
-            tim.Start();
-            var tas = Task.Run(() => ClassLibraryPrimeTens.PrimeTens.GetMinMaxTens(ClassLibraryPrimeTens.PrimeTens.GetPrimeNumbersEratosthenes(num, ct),ct));
-            while (min_loc == -1)
-            {
-                if (tas.Status == TaskStatus.RanToCompletion)
-                {
-                    var temp = tas.Result;
-                    min_count = temp.minCount;
-                    min_loc = temp.minRangeStart;
-                    max_count = temp.maxCount;
-                    max_loc = temp.maxRangeStart;
-                }
-                else
-                {
-                    if (ct.IsCancellationRequested)
-                    {
-                        return (0, 0, 0, 0, 0);
-                    }
-                    RTx_Output.Invoke(new Action(() => RTx_Output.Text = $"{tim.ElapsedMilliseconds / 1000}.{tim.ElapsedMilliseconds / 100 % 10} с"));
-                    Thread.Sleep(5);
-                }
-                if (ct.IsCancellationRequested)
-                {
-                    return (0, 0, 0, 0, 0);
-                }
-            }
-            tim.Stop();
-            long mls = tim.ElapsedMilliseconds;
-            return (min_count, min_loc, max_count, max_loc, mls);
+            Erathosphenes,
+            Division_Lookup
         }
-
-        (int min_count, int min_loc, int max_count, int max_loc, long mls) Start_Root(CancellationToken ct)
+        (int min_count, int min_loc, int max_count, int max_loc, long mls) Start_Lookup(CancellationToken ct,Prime_Method Meth)
         {
             int num = int.Parse(Tx_Input.Text);
             int min_loc = -1, min_count = -1, max_loc = -1, max_count = -1;
             Stopwatch tim = new Stopwatch();
             tim.Start();
-            var tas = Task.Run(() => ClassLibraryPrimeTens.PrimeTens.GetMinMaxTens(ClassLibraryPrimeTens.PrimeTens.GetPrimeNumbersSqrt(num,ct), ct));
+            Task<(int min_count, int min_loc, int max_count, int max_loc)> tas;
+            if (Meth == Prime_Method.Erathosphenes)
+            {
+                tas = Task.Run(() => ClassLibraryPrimeTens.PrimeTens.GetMinMaxTens(ClassLibraryPrimeTens.PrimeTens.GetPrimeNumbersEratosthenes(num, ct), ct));
+            }
+            else
+            {
+                tas = Task.Run(() => ClassLibraryPrimeTens.PrimeTens.GetMinMaxTens(ClassLibraryPrimeTens.PrimeTens.GetPrimeNumbersSqrt(num, ct), ct));
+            }
             while (min_loc == -1)
             {
                 if (tas.Status == TaskStatus.RanToCompletion)
                 {
                     var temp = tas.Result;
-                    min_count = temp.minCount;
-                    min_loc = temp.minRangeStart;
-                    max_count = temp.maxCount;
-                    max_loc = temp.maxRangeStart;
+                    min_count = temp.min_count;
+                    min_loc = temp.min_loc;
+                    max_count = temp.max_count;
+                    max_loc = temp.max_loc;
                 }
                 else
                 {
