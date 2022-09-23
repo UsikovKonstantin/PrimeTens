@@ -55,11 +55,11 @@ namespace WinFormsAppPrimeTens
             Task<(int min_count, int min_loc, int max_count, int max_loc)> tas;
             if (Meth == Prime_Method.Erathosphenes)
             {
-                tas = Task.Run(() => ClassLibraryPrimeTens.PrimeTens.GetMinMaxTens(ClassLibraryPrimeTens.PrimeTens.GetPrimeNumbersEratosthenes(num, ct), ct));
+                tas = Task.Run(() => ClassLibraryPrimeTens.PrimeTens.GetMinMaxTens(ClassLibraryPrimeTens.PrimeTens.GetPrimeNumbersEratosthenes(num, ct), 10,ct));
             }
             else
             {
-                tas = Task.Run(() => ClassLibraryPrimeTens.PrimeTens.GetMinMaxTens(ClassLibraryPrimeTens.PrimeTens.GetPrimeNumbersSqrt(num, ct), ct));
+                tas = Task.Run(() => ClassLibraryPrimeTens.PrimeTens.GetMinMaxTens(ClassLibraryPrimeTens.PrimeTens.GetPrimeNumbersSqrt(num, ct), 10,ct));
             }
             while (min_loc == -1)
             {

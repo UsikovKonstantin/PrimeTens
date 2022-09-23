@@ -147,7 +147,7 @@ namespace ClassLibraryPrimeTens
         /// </summary>
         /// <param name="n"> число для поиска делителей </param>
         /// <returns> список делителей, кроме базовых </returns>
-        public static List<int> FindDivisors(int n)
+        public static List<int> FindDivisors(int n,CancellationToken ct)
         {
             List<int> res = new List<int>();
             int sqrt = (int)Math.Sqrt(n);
@@ -158,6 +158,10 @@ namespace ClassLibraryPrimeTens
             }
             for (int i = 2; i <= sqrt && i > 0; i++)
             {
+                if (ct.IsCancellationRequested)
+                {
+                    return null;
+                }
                 if (n % i == 0)
                 {
                     res.Add(i);
@@ -173,12 +177,16 @@ namespace ClassLibraryPrimeTens
         /// </summary>
         /// <param name="n"> верхняя граница поиска </param>
         /// <returns> кортеж из двух чисел, start - начало отрезка, end - конец отрезка</returns>
-        public static (int start, int end) FindMaxRangeWithoutPrimeNumbers(int n)
+        public static (int start, int end) FindMaxRangeWithoutPrimeNumbers(int n,CancellationToken ct)
         {
             int count = 0, maxCount = 0, start = 0, end = 0;
             BitArray prime = GetPrimeNumbersEratosthenes(n, new CancellationToken());
             for (int i = 2; i <= n; i++)
             {
+                if (ct.IsCancellationRequested)
+                {
+                    return (0,0);
+                }
                 if (!prime[i])
                 {
                     count++;
@@ -199,16 +207,21 @@ namespace ClassLibraryPrimeTens
                 end = n;
                 start = n - count + 1;
             }
+
             return (start, end);
         }
 
-        public static List<(int start, int end, int primeCount, double primePercent)> GetPrimeDistribution(BitArray prime, int segmentsCount)
+        public static List<(int start, int end, int primeCount, double primePercent)> GetPrimeDistribution(BitArray prime, int segmentsCount, CancellationToken ct)
         {
             List<(int start, int end, int primeCount, double primePercent)> result = new ();
             int amountInSegment = (prime.Count - 1) / segmentsCount;
             int start = 1;
             while (start < prime.Count)
             {
+                if (ct.IsCancellationRequested)
+                {
+                    return null;
+                }
                 int count = 0;
                 int end = start + amountInSegment;
                 for (int i = start; i < end; i++)
