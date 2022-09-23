@@ -108,18 +108,19 @@ namespace ClassLibraryPrimeTens
         public static (int minCount, int minRangeStart, int maxCount, int maxRangeStart) GetMinMaxTens(BitArray prime, CancellationToken ct)
         {
             int minCount = 10, minRangeStart = -1, maxCount = -1, maxRangeStart = -1;
+            const int rnange = 10;
             if (ct.IsCancellationRequested)
             {
                 return (0, 0, 0, 0);
             }
-            for (int i = 1; i < prime.Length; i += 10)
+            for (int i = 1; i < prime.Length; i += rnange)
             {
                 if (ct.IsCancellationRequested)
                 {
                     return (0, 0, 0, 0);
                 }
                 int count = 0;
-                for (int j = i; j < i + 10; j++)
+                for (int j = i; j < i + rnange; j++)
                 {
                     if (prime[j])
                     {
