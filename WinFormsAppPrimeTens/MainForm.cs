@@ -24,6 +24,16 @@ namespace WinFormsAppPrimeTens
             Cur_cts = new CancellationTokenSource();
             if (RB_Solver_MinMaxSeg.Checked)
             {
+                int num = int.Parse(Tx_Input.Text);
+                int len = int.Parse(Tx_Additional_Input.Text);
+                if (num % len != 0)
+                {
+                    num = num - (num % len);
+                    Tx_Input.Text = num.ToString();
+                    SetControls(false);
+                    return;
+                }
+                
                 if (RB_Method_Erat.Checked)
                 {
                     Cur_run = Task.Run(() => Start_Lookup_Segments(Cur_cts.Token, Prime_Method.Erathosphenes));
@@ -33,13 +43,12 @@ namespace WinFormsAppPrimeTens
                     Cur_run = Task.Run(() => Start_Lookup_Segments(Cur_cts.Token, Prime_Method.Division_Lookup));
                 }
                 await Cur_run;
-                (int min_count, int min_loc, int max_count, int max_loc,long mls) result = Cur_run.Result;
+                (int min_count, int min_loc, int max_count, int max_loc, long mls) result = Cur_run.Result;
                 if (result == (0, 0, 0, 0, 0))
                 {
                     Cur_run.Dispose();
                     return;
                 }
-                int len = int.Parse(Tx_Additional_Input.Text);
                 RTx_Output.Text = $"Минимальный сегмент {result.min_loc}-{result.min_loc + (len - 1)}\n" +
                     $"Наименьшее число простых чисел {result.min_count}\n" +
                     $"Максимальный сегмент {result.max_loc}-{result.max_loc + (len - 1)}\n" +
@@ -77,14 +86,14 @@ namespace WinFormsAppPrimeTens
         (int min_count, int min_loc, int max_count, int max_loc, long mls) Start_Lookup_Segments(CancellationToken ct, Prime_Method Meth)
         {
             int num = int.Parse(Tx_Input.Text);
-            num = num - (num % int.Parse(Tx_Additional_Input.Text));
             int len = int.Parse(Tx_Additional_Input.Text);
             int min_loc = -1, min_count = -1, max_loc = -1, max_count = -1;
             Stopwatch tim = new Stopwatch();
             tim.Start();
             Task<(int min_count, int min_loc, int max_count, int max_loc)> tas;
             tas = Task.Run(() => PrimeTens.GetMinMaxSegments(num, len, Meth, ct));
-            while (min_loc == -1)
+            bool running = true;
+            while (running)
             {
                 if (tas.Status == TaskStatus.RanToCompletion)
                 {
@@ -93,6 +102,7 @@ namespace WinFormsAppPrimeTens
                     min_loc = temp.min_loc;
                     max_count = temp.max_count;
                     max_loc = temp.max_loc;
+                    running = false;
                 }
                 else
                 {
@@ -126,6 +136,15 @@ namespace WinFormsAppPrimeTens
             RB_Method_Root.Enabled = !isTaskRunning;
             Tx_Input.Enabled = !isTaskRunning;
             Bt_Start.Enabled = !isTaskRunning;
+            Tx_Additional_Input.Enabled = !isTaskRunning;
+            RB_Solver_BarChart.Enabled = !isTaskRunning;
+            RB_Solver_Divisors.Enabled = !isTaskRunning;
+            RB_Solver_MaxSegment.Enabled = !isTaskRunning;
+            RB_Solver_MinMaxSeg.Enabled = !isTaskRunning;
+            if (RB_Solver_Divisors.Checked || RB_Solver_BarChart.Checked)
+            {
+                Bt_Output.Enabled = !isTaskRunning;
+            }
         }
 
         private void Tx_Input_TextChanged(object sender, EventArgs e)

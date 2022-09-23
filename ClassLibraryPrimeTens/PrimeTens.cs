@@ -120,7 +120,7 @@ namespace ClassLibraryPrimeTens
                 prime = GetPrimeNumbersEratosthenes(n, ct);
             else if (method == Prime_Method.Division_Lookup)
                 prime = GetPrimeNumbersSqrt(n, ct);
-            int minCount = 10, minRangeStart = -1, maxCount = -1, maxRangeStart = -1;
+            int minCount = int.MaxValue, minRangeStart = -1, maxCount = -1, maxRangeStart = -1;
             if (ct.IsCancellationRequested)
                 return (0, 0, 0, 0);
             for (int i = 1; i < prime.Length; i += segmentLength)
