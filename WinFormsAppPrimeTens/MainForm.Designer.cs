@@ -37,21 +37,24 @@
             this.RB_Method_Root = new System.Windows.Forms.RadioButton();
             this.flowLayoutPanel3 = new System.Windows.Forms.FlowLayoutPanel();
             this.RB_Solver_MinMaxSeg = new System.Windows.Forms.RadioButton();
-            this.radioButton2 = new System.Windows.Forms.RadioButton();
-            this.radioButton3 = new System.Windows.Forms.RadioButton();
-            this.radioButton4 = new System.Windows.Forms.RadioButton();
+            this.RB_Solver_MaxSegment = new System.Windows.Forms.RadioButton();
+            this.RB_Solver_Divisors = new System.Windows.Forms.RadioButton();
+            this.RB_Solver_BarChart = new System.Windows.Forms.RadioButton();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.Bt_Start = new System.Windows.Forms.Button();
             this.Bt_End = new System.Windows.Forms.Button();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
             this.RTx_Output = new System.Windows.Forms.RichTextBox();
+            this.Bt_Output = new System.Windows.Forms.Button();
             this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
             this.Tx_Input = new System.Windows.Forms.TextBox();
+            this.Tx_Additional_Input = new System.Windows.Forms.TextBox();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
-            this.label1 = new System.Windows.Forms.Label();
+            this.Lb_Help = new System.Windows.Forms.Label();
             this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
             this.tableLayoutPanel1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -61,6 +64,7 @@
             this.groupBox3.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
             this.groupBox4.SuspendLayout();
+            this.tableLayoutPanel4.SuspendLayout();
             this.tableLayoutPanel6.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tableLayoutPanel5.SuspendLayout();
@@ -151,9 +155,9 @@
             // flowLayoutPanel3
             // 
             this.flowLayoutPanel3.Controls.Add(this.RB_Solver_MinMaxSeg);
-            this.flowLayoutPanel3.Controls.Add(this.radioButton2);
-            this.flowLayoutPanel3.Controls.Add(this.radioButton3);
-            this.flowLayoutPanel3.Controls.Add(this.radioButton4);
+            this.flowLayoutPanel3.Controls.Add(this.RB_Solver_MaxSegment);
+            this.flowLayoutPanel3.Controls.Add(this.RB_Solver_Divisors);
+            this.flowLayoutPanel3.Controls.Add(this.RB_Solver_BarChart);
             this.flowLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel3.Location = new System.Drawing.Point(3, 3);
             this.flowLayoutPanel3.Name = "flowLayoutPanel3";
@@ -171,36 +175,40 @@
             this.RB_Solver_MinMaxSeg.TabStop = true;
             this.RB_Solver_MinMaxSeg.Text = "Мин. Макс. Сегменты";
             this.RB_Solver_MinMaxSeg.UseVisualStyleBackColor = true;
+            this.RB_Solver_MinMaxSeg.CheckedChanged += new System.EventHandler(this.RB_Solver_MinMaxSeg_CheckedChanged);
             // 
-            // radioButton2
+            // RB_Solver_MaxSegment
             // 
-            this.radioButton2.AutoSize = true;
-            this.radioButton2.Location = new System.Drawing.Point(155, 3);
-            this.radioButton2.Name = "radioButton2";
-            this.radioButton2.Size = new System.Drawing.Size(266, 19);
-            this.radioButton2.TabIndex = 1;
-            this.radioButton2.Text = "Максимальный сегмент без простых чисел";
-            this.radioButton2.UseVisualStyleBackColor = true;
+            this.RB_Solver_MaxSegment.AutoSize = true;
+            this.RB_Solver_MaxSegment.Location = new System.Drawing.Point(155, 3);
+            this.RB_Solver_MaxSegment.Name = "RB_Solver_MaxSegment";
+            this.RB_Solver_MaxSegment.Size = new System.Drawing.Size(266, 19);
+            this.RB_Solver_MaxSegment.TabIndex = 1;
+            this.RB_Solver_MaxSegment.Text = "Максимальный сегмент без простых чисел";
+            this.RB_Solver_MaxSegment.UseVisualStyleBackColor = true;
+            this.RB_Solver_MaxSegment.CheckedChanged += new System.EventHandler(this.RB_Solver_MaxSegment_CheckedChanged);
             // 
-            // radioButton3
+            // RB_Solver_Divisors
             // 
-            this.radioButton3.AutoSize = true;
-            this.radioButton3.Location = new System.Drawing.Point(427, 3);
-            this.radioButton3.Name = "radioButton3";
-            this.radioButton3.Size = new System.Drawing.Size(114, 19);
-            this.radioButton3.TabIndex = 1;
-            this.radioButton3.Text = "Делители числа";
-            this.radioButton3.UseVisualStyleBackColor = true;
+            this.RB_Solver_Divisors.AutoSize = true;
+            this.RB_Solver_Divisors.Location = new System.Drawing.Point(427, 3);
+            this.RB_Solver_Divisors.Name = "RB_Solver_Divisors";
+            this.RB_Solver_Divisors.Size = new System.Drawing.Size(114, 19);
+            this.RB_Solver_Divisors.TabIndex = 1;
+            this.RB_Solver_Divisors.Text = "Делители числа";
+            this.RB_Solver_Divisors.UseVisualStyleBackColor = true;
+            this.RB_Solver_Divisors.CheckedChanged += new System.EventHandler(this.RB_Solver_Divisors_CheckedChanged);
             // 
-            // radioButton4
+            // RB_Solver_BarChart
             // 
-            this.radioButton4.AutoSize = true;
-            this.radioButton4.Location = new System.Drawing.Point(547, 3);
-            this.radioButton4.Name = "radioButton4";
-            this.radioButton4.Size = new System.Drawing.Size(271, 19);
-            this.radioButton4.TabIndex = 2;
-            this.radioButton4.Text = "Гистограмма распределения простых чисел";
-            this.radioButton4.UseVisualStyleBackColor = true;
+            this.RB_Solver_BarChart.AutoSize = true;
+            this.RB_Solver_BarChart.Location = new System.Drawing.Point(547, 3);
+            this.RB_Solver_BarChart.Name = "RB_Solver_BarChart";
+            this.RB_Solver_BarChart.Size = new System.Drawing.Size(271, 19);
+            this.RB_Solver_BarChart.TabIndex = 2;
+            this.RB_Solver_BarChart.Text = "Гистограмма распределения простых чисел";
+            this.RB_Solver_BarChart.UseVisualStyleBackColor = true;
+            this.RB_Solver_BarChart.CheckedChanged += new System.EventHandler(this.RB_Solver_BarChart_CheckedChanged);
             // 
             // groupBox3
             // 
@@ -253,7 +261,7 @@
             // 
             // groupBox4
             // 
-            this.groupBox4.Controls.Add(this.RTx_Output);
+            this.groupBox4.Controls.Add(this.tableLayoutPanel4);
             this.groupBox4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox4.Location = new System.Drawing.Point(3, 447);
             this.groupBox4.Name = "groupBox4";
@@ -262,15 +270,41 @@
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Вывод";
             // 
+            // tableLayoutPanel4
+            // 
+            this.tableLayoutPanel4.ColumnCount = 2;
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 90F));
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
+            this.tableLayoutPanel4.Controls.Add(this.RTx_Output, 0, 0);
+            this.tableLayoutPanel4.Controls.Add(this.Bt_Output, 1, 0);
+            this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel4.Location = new System.Drawing.Point(3, 19);
+            this.tableLayoutPanel4.Name = "tableLayoutPanel4";
+            this.tableLayoutPanel4.RowCount = 1;
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(1033, 83);
+            this.tableLayoutPanel4.TabIndex = 0;
+            // 
             // RTx_Output
             // 
             this.RTx_Output.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.RTx_Output.Location = new System.Drawing.Point(3, 19);
+            this.RTx_Output.Location = new System.Drawing.Point(3, 3);
             this.RTx_Output.Name = "RTx_Output";
             this.RTx_Output.ReadOnly = true;
-            this.RTx_Output.Size = new System.Drawing.Size(1033, 83);
-            this.RTx_Output.TabIndex = 0;
+            this.RTx_Output.Size = new System.Drawing.Size(923, 77);
+            this.RTx_Output.TabIndex = 1;
             this.RTx_Output.Text = "";
+            // 
+            // Bt_Output
+            // 
+            this.Bt_Output.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.Bt_Output.Enabled = false;
+            this.Bt_Output.Location = new System.Drawing.Point(932, 3);
+            this.Bt_Output.Name = "Bt_Output";
+            this.Bt_Output.Size = new System.Drawing.Size(98, 77);
+            this.Bt_Output.TabIndex = 2;
+            this.Bt_Output.Text = "Вывод";
+            this.Bt_Output.UseVisualStyleBackColor = true;
             // 
             // tableLayoutPanel6
             // 
@@ -303,11 +337,13 @@
             this.tableLayoutPanel5.ColumnCount = 1;
             this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel5.Controls.Add(this.Tx_Input, 0, 1);
+            this.tableLayoutPanel5.Controls.Add(this.Tx_Additional_Input, 0, 2);
             this.tableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel5.Location = new System.Drawing.Point(3, 19);
             this.tableLayoutPanel5.Name = "tableLayoutPanel5";
-            this.tableLayoutPanel5.RowCount = 3;
+            this.tableLayoutPanel5.RowCount = 4;
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel5.Size = new System.Drawing.Size(777, 114);
@@ -316,7 +352,7 @@
             // Tx_Input
             // 
             this.Tx_Input.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.Tx_Input.Location = new System.Drawing.Point(3, 45);
+            this.Tx_Input.Location = new System.Drawing.Point(3, 30);
             this.Tx_Input.Margin = new System.Windows.Forms.Padding(3, 3, 20, 3);
             this.Tx_Input.MaxLength = 11;
             this.Tx_Input.Name = "Tx_Input";
@@ -325,9 +361,21 @@
             this.Tx_Input.Text = "100";
             this.Tx_Input.TextChanged += new System.EventHandler(this.Tx_Input_TextChanged);
             // 
+            // Tx_Additional_Input
+            // 
+            this.Tx_Additional_Input.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.Tx_Additional_Input.Location = new System.Drawing.Point(3, 60);
+            this.Tx_Additional_Input.Margin = new System.Windows.Forms.Padding(3, 3, 20, 3);
+            this.Tx_Additional_Input.MaxLength = 5;
+            this.Tx_Additional_Input.Name = "Tx_Additional_Input";
+            this.Tx_Additional_Input.Size = new System.Drawing.Size(754, 23);
+            this.Tx_Additional_Input.TabIndex = 1;
+            this.Tx_Additional_Input.Text = "10";
+            this.Tx_Additional_Input.TextChanged += new System.EventHandler(this.Tx_Additional_Input_TextChanged);
+            // 
             // groupBox5
             // 
-            this.groupBox5.Controls.Add(this.label1);
+            this.groupBox5.Controls.Add(this.Lb_Help);
             this.groupBox5.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox5.Location = new System.Drawing.Point(792, 3);
             this.groupBox5.Name = "groupBox5";
@@ -336,17 +384,17 @@
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Справка";
             // 
-            // label1
+            // Lb_Help
             // 
-            this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label1.Location = new System.Drawing.Point(3, 19);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(238, 114);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "Поиск наибольших десятков в диапазоне [2, n] с минимальным и максимальным количес" +
+            this.Lb_Help.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.Lb_Help.Location = new System.Drawing.Point(3, 19);
+            this.Lb_Help.Name = "Lb_Help";
+            this.Lb_Help.Size = new System.Drawing.Size(238, 114);
+            this.Lb_Help.TabIndex = 1;
+            this.Lb_Help.Text = "Поиск наибольших десятков в диапазоне [2, n] с минимальным и максимальным количес" +
     "твом простых чисел.\r\nВходные данные: натуральное число n, кратное 10 в диапазоне" +
     " [10, 2147483640].";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.Lb_Help.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // errorProvider
             // 
@@ -372,6 +420,7 @@
             this.groupBox3.ResumeLayout(false);
             this.tableLayoutPanel3.ResumeLayout(false);
             this.groupBox4.ResumeLayout(false);
+            this.tableLayoutPanel4.ResumeLayout(false);
             this.tableLayoutPanel6.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.tableLayoutPanel5.ResumeLayout(false);
@@ -391,7 +440,6 @@
         private TableLayoutPanel tableLayoutPanel3;
         private TextBox Tx_Input;
         private Button Bt_Start;
-        private RichTextBox RTx_Output;
         private GroupBox groupBox2;
         private TableLayoutPanel tableLayoutPanel2;
         private FlowLayoutPanel flowLayoutPanel1;
@@ -400,13 +448,17 @@
         private Button Bt_End;
         private ErrorProvider errorProvider;
         private TableLayoutPanel tableLayoutPanel5;
-        private Label label1;
+        private Label Lb_Help;
         private TableLayoutPanel tableLayoutPanel6;
         private GroupBox groupBox5;
         private FlowLayoutPanel flowLayoutPanel3;
         private RadioButton RB_Solver_MinMaxSeg;
-        private RadioButton radioButton2;
-        private RadioButton radioButton3;
-        private RadioButton radioButton4;
+        private RadioButton RB_Solver_MaxSegment;
+        private RadioButton RB_Solver_Divisors;
+        private RadioButton RB_Solver_BarChart;
+        private TextBox Tx_Additional_Input;
+        private TableLayoutPanel tableLayoutPanel4;
+        private RichTextBox RTx_Output;
+        private Button Bt_Output;
     }
 }
