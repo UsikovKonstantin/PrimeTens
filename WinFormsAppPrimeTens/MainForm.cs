@@ -1,5 +1,5 @@
-﻿using System.Diagnostics;
-using ClassLibraryPrimeTens;
+﻿using ClassLibraryPrimeTens;
+using System.Diagnostics;
 
 namespace WinFormsAppPrimeTens
 {
@@ -13,55 +13,77 @@ namespace WinFormsAppPrimeTens
         const int min_num = 3;
         const int max_num = int.MaxValue - int.MaxValue % 10;
 
-        Task<(int min_count, int min_loc, int max_count, int max_loc, long mls)> Cur_run;
+        dynamic Cur_run;
         CancellationTokenSource Cur_cts;
+
+        dynamic cur_data;
 
         private async void Bt_Start_Click(object sender, EventArgs e)
         {
             SetControls(true);
             Cur_cts = new CancellationTokenSource();
-            if (RB_Method_Erat.Checked)
+            if (RB_Solver_MinMaxSeg.Checked)
             {
-                Cur_run = Task.Run(() => Start_Lookup(Cur_cts.Token, Prime_Method.Erathosphenes));
+                if (RB_Method_Erat.Checked)
+                {
+                    Cur_run = Task.Run(() => Start_Lookup_Segments(Cur_cts.Token, Prime_Method.Erathosphenes));
+                }
+                else
+                {
+                    Cur_run = Task.Run(() => Start_Lookup_Segments(Cur_cts.Token, Prime_Method.Division_Lookup));
+                }
+                await Cur_run;
+                (int min_count, int min_loc, int max_count, int max_loc,long mls) result = Cur_run.Result;
+                if (result == (0, 0, 0, 0, 0))
+                {
+                    Cur_run.Dispose();
+                    return;
+                }
+                int len = int.Parse(Tx_Additional_Input.Text);
+                RTx_Output.Text = $"Минимальный сегмент {result.min_loc}-{result.min_loc + (len - 1)}\n" +
+                    $"Наименьшее число простых чисел {result.min_count}\n" +
+                    $"Максимальный сегмент {result.max_loc}-{result.max_loc + (len - 1)}\n" +
+                    $"Максимальное число простых чисел {result.max_count}\n" +
+                    $"Время выполнения {result.mls}мс";
             }
-            else
+            if (RB_Solver_MaxSegment.Checked)
             {
-                Cur_run = Task.Run(() => Start_Lookup(Cur_cts.Token, Prime_Method.Division_Lookup));
+                if (RB_Method_Erat.Checked)
+                {
+
+                }
+                else
+                {
+
+                }
             }
-            await Cur_run;
-            var result = Cur_run.Result;
-            if (result == (0, 0, 0, 0, 0))
+            if (RB_Solver_Divisors.Checked)
             {
-                Cur_run.Dispose();
-                return;
+
             }
-            RTx_Output.Text = $"Минимальный десяток {result.min_loc}-{result.min_loc + 9}\n" +
-                $"Наименьшее число простых чисел {result.min_count}\n" +
-                $"Максимальный десяток {result.max_loc}-{result.max_loc + 9}\n" +
-                $"Максимальное число простых чисел {result.max_count}\n" +
-                $"Время выполнения {result.mls}мс";
+            if (RB_Solver_BarChart.Checked)
+            {
+                if (RB_Method_Erat.Checked)
+                {
+
+                }
+                else
+                {
+
+                }
+            }
             SetControls(false);
         }
-        //enum Prime_Method
-        //{
-        //    Erathosphenes,
-        //    Division_Lookup
-        //}
-        (int min_count, int min_loc, int max_count, int max_loc, long mls) Start_Lookup(CancellationToken ct,Prime_Method Meth)
+        (int min_count, int min_loc, int max_count, int max_loc, long mls) Start_Lookup_Segments(CancellationToken ct, Prime_Method Meth)
         {
             int num = int.Parse(Tx_Input.Text);
+            num = num - (num % int.Parse(Tx_Additional_Input.Text));
+            int len = int.Parse(Tx_Additional_Input.Text);
             int min_loc = -1, min_count = -1, max_loc = -1, max_count = -1;
             Stopwatch tim = new Stopwatch();
             tim.Start();
             Task<(int min_count, int min_loc, int max_count, int max_loc)> tas;
-            if (Meth == Prime_Method.Erathosphenes)
-            {
-                tas = Task.Run(() => ClassLibraryPrimeTens.PrimeTens.GetMinMaxTens(ClassLibraryPrimeTens.PrimeTens.GetPrimeNumbersEratosthenes(num, ct), 10, ct));
-            }
-            else
-            {
-                tas = Task.Run(() => ClassLibraryPrimeTens.PrimeTens.GetMinMaxTens(ClassLibraryPrimeTens.PrimeTens.GetPrimeNumbersSqrt(num, ct), 10, ct));
-            }
+            tas = Task.Run(() => PrimeTens.GetMinMaxSegments(num, len, Meth, ct));
             while (min_loc == -1)
             {
                 if (tas.Status == TaskStatus.RanToCompletion)
