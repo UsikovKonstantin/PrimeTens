@@ -105,22 +105,21 @@ namespace ClassLibraryPrimeTens
         /// maxCount - максимальное количество простых чисел в десятке
         /// maxRangeStart - число, являющееся началом десятки с максимальным количеством простых чисел
         /// </returns>
-        public static (int minCount, int minRangeStart, int maxCount, int maxRangeStart) GetMinMaxTens(BitArray prime, CancellationToken ct)
+        public static (int minCount, int minRangeStart, int maxCount, int maxRangeStart) GetMinMaxTens(BitArray prime, int segmentLength, CancellationToken ct)
         {
             int minCount = 10, minRangeStart = -1, maxCount = -1, maxRangeStart = -1;
-            const int rnange = 10;
             if (ct.IsCancellationRequested)
             {
                 return (0, 0, 0, 0);
             }
-            for (int i = 1; i < prime.Length; i += rnange)
+            for (int i = 1; i < prime.Length; i += segmentLength)
             {
                 if (ct.IsCancellationRequested)
                 {
                     return (0, 0, 0, 0);
                 }
                 int count = 0;
-                for (int j = i; j < i + rnange; j++)
+                for (int j = i; j < i + segmentLength; j++)
                 {
                     if (prime[j])
                     {
@@ -202,6 +201,30 @@ namespace ClassLibraryPrimeTens
             }
             return (start, end);
         }
+
+        public static List<(int start, int end, int primeCount, double primePercent)> GetPrimeDistribution(BitArray prime, int segmentsCount)
+        {
+            List<(int start, int end, int primeCount, double primePercent)> result = new ();
+            int amountInSegment = (prime.Count - 1) / segmentsCount;
+            int start = 1;
+            while (start < prime.Count)
+            {
+                int count = 0;
+                int end = start + amountInSegment;
+                for (int i = start; i < end; i++)
+                {
+                    if (prime[i])
+                    {
+                        count++;
+                    }
+                }
+                result.Add((start, end - 1, count, (double)count/amountInSegment));
+                start += amountInSegment;
+            }
+            return result;
+        }
+
+
         #endregion
     }
 }
