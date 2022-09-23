@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using ClassLibraryPrimeTens;
 
 namespace WinFormsAppPrimeTens
 {
@@ -41,11 +42,11 @@ namespace WinFormsAppPrimeTens
                 $"Время выполнения {result.mls}мс";
             SetControls(false);
         }
-        enum Prime_Method
-        {
-            Erathosphenes,
-            Division_Lookup
-        }
+        //enum Prime_Method
+        //{
+        //    Erathosphenes,
+        //    Division_Lookup
+        //}
         (int min_count, int min_loc, int max_count, int max_loc, long mls) Start_Lookup(CancellationToken ct,Prime_Method Meth)
         {
             int num = int.Parse(Tx_Input.Text);
