@@ -305,6 +305,7 @@
             this.Bt_Output.TabIndex = 2;
             this.Bt_Output.Text = "Вывод";
             this.Bt_Output.UseVisualStyleBackColor = true;
+            this.Bt_Output.Click += new System.EventHandler(this.Bt_Output_Click);
             // 
             // tableLayoutPanel6
             // 
