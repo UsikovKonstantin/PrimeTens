@@ -1,5 +1,6 @@
 ﻿using ClassLibraryPrimeTens;
 using System.Diagnostics;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TaskbarClock;
 
 namespace WinFormsAppPrimeTens
 {
