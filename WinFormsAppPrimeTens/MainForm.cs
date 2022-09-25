@@ -29,11 +29,11 @@ namespace WinFormsAppPrimeTens
             Cur_cts = new CancellationTokenSource();
             if (RB_Solver_MinMaxSeg.Checked)
             {
-                int num = int.Parse(Tx_Input.Text);
+                ulong num = ulong.Parse(Tx_Input.Text);
                 int len = int.Parse(Tx_Additional_Input.Text);
-                if (num % len != 0)
+                if (num % (ulong)len != 0)
                 {
-                    num = num - (num % len);
+                    num = num - (num % (ulong)len);
                     Tx_Input.Text = num.ToString();
                     SetControls(false);
                     return;
