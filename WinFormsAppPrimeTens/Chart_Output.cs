@@ -2,12 +2,12 @@
 {
     public partial class Chart_Output : Form
     {
-        public Chart_Output(List<(int start, int end, int primeCount, double primePercent)> data)
+        public Chart_Output(List<(ulong start, ulong end, ulong primeCount, double primePercent)> data)
         {
             InitializeComponent();
             Data = data;
         }
-        List<(int start, int end, int primeCount, double primePercent)> Data;
+        List<(ulong start, ulong end, ulong primeCount, double primePercent)> Data;
         private void Chart_Output_Load(object sender, EventArgs e)
         {
             List<double> trim = new List<double>(Data.Count);

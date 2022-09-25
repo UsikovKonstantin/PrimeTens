@@ -4,7 +4,7 @@ namespace WinFormsAppPrimeTens
 {
     public partial class Divisor_Output : Form
     {
-        public Divisor_Output(List<int> divs)
+        public Divisor_Output(List<ulong> divs)
         {
             InitializeComponent();
             StringBuilder Temp = new();

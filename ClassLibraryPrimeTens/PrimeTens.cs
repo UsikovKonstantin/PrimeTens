@@ -8,7 +8,8 @@ namespace ClassLibraryPrimeTens
     public enum Prime_Method
     {
         Erathosphenes,
-        Division_Lookup
+        Division_Lookup,
+        Fast_Lookup
     }
 
     /// <summary>
