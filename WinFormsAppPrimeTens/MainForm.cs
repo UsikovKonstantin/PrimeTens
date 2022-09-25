@@ -1,5 +1,4 @@
 ﻿using ClassLibraryPrimeTens;
-using System.CodeDom.Compiler;
 using System.Diagnostics;
 
 namespace WinFormsAppPrimeTens
@@ -101,7 +100,7 @@ namespace WinFormsAppPrimeTens
                 Cur_run = Task.Run(() => Start_Lookup_Divisors(Cur_cts.Token));
                 await Cur_run;
                 divisors = Cur_run.Result;
-                if (divisors == (null,0))
+                if (divisors == (null, 0))
                 {
                     Cur_run.Dispose();
                     SetControls(false);
@@ -139,7 +138,7 @@ namespace WinFormsAppPrimeTens
                 }
                 await Cur_run;
                 (List<(ulong start, ulong end, ulong primeCount, double primePercent)> data, long mls) result = Cur_run.Result;
-                if (result == (null,0))
+                if (result == (null, 0))
                 {
                     Cur_run.Dispose();
                     SetControls(false);
@@ -208,7 +207,7 @@ namespace WinFormsAppPrimeTens
                     var temp = tas.Result;
                     sw.Stop();
                     List<(ulong start, ulong end, ulong primeCount, double primePercent)> data = new();
-                    
+
                     if (temp[0].Item1 is int)
                     {
                         foreach (var item in temp)
@@ -313,7 +312,7 @@ namespace WinFormsAppPrimeTens
                 temp = Task.Run(() => PrimeTens.GetMinMaxSegments((int)num, len, Meth, ct));
                 tas = temp;
             }
-            
+
             bool running = true;
             while (running)
             {
@@ -334,7 +333,7 @@ namespace WinFormsAppPrimeTens
                         max_count = (ulong)temp.Item3;
                         max_loc = (ulong)temp.Item4;
                     }
-                    
+
                     running = false;
                 }
                 else
@@ -386,51 +385,75 @@ namespace WinFormsAppPrimeTens
                 Bt_Output.Enabled = !isTaskRunning;
             }
         }
-
-        private void Tx_Input_TextChanged(object sender, EventArgs e)
+        void check_both_inputs()
         {
-            if (ulong.TryParse(Tx_Input.Text, out ulong n))
             {
-                if (RB_Method_Fast.Checked)
+                if (ulong.TryParse(Tx_Input.Text, out ulong n))
                 {
-                    if (n > max_num_b)
+                    if (RB_Method_Fast.Checked)
                     {
-                        errorProvider.SetError(Tx_Input, "Слишком большое число");
-                        Bt_Start.Enabled = false;
-                        return;
+                        if (n > max_num_b)
+                        {
+                            errorProvider.SetError(Tx_Input, "Слишком большое число");
+                            Bt_Start.Enabled = false;
+                            return;
+                        }
+                        if (n < min_num)
+                        {
+                            errorProvider.SetError(Tx_Input, "Слишком маленькое число");
+                            Bt_Start.Enabled = false;
+                            return;
+                        }
                     }
-                    if (n < min_num)
+                    else
                     {
-                        errorProvider.SetError(Tx_Input, "Слишком маленькое число");
-                        Bt_Start.Enabled = false;
-                        return;
+                        if (n > max_num)
+                        {
+                            errorProvider.SetError(Tx_Input, "Слишком большое число");
+                            Bt_Start.Enabled = false;
+                            return;
+                        }
+                        if (n < min_num)
+                        {
+                            errorProvider.SetError(Tx_Input, "Слишком маленькое число");
+                            Bt_Start.Enabled = false;
+                            return;
+                        }
                     }
+
+                    errorProvider.Clear();
+                    Bt_Start.Enabled = true;
                 }
                 else
                 {
-                    if (n > max_num)
-                    {
-                        errorProvider.SetError(Tx_Input, "Слишком большое число");
-                        Bt_Start.Enabled = false;
-                        return;
-                    }
-                    if (n < min_num)
-                    {
-                        errorProvider.SetError(Tx_Input, "Слишком маленькое число");
-                        Bt_Start.Enabled = false;
-                        return;
-                    }
+                    errorProvider.SetError(Tx_Input, "Нельзя привести к целому числу");
+                    Bt_Start.Enabled = false;
+                    return;
                 }
-
-                errorProvider.Clear();
-                Bt_Start.Enabled = true;
             }
-            else
             {
-                errorProvider.SetError(Tx_Input, "Нельзя привести к целому числу");
-                Bt_Start.Enabled = false;
-                return;
+                if (int.TryParse(Tx_Additional_Input.Text, out int n))
+                {
+                    if (n < 1)
+                    {
+                        errorProvider.SetError(Tx_Additional_Input, "Слишком маленькое число");
+                        Bt_Start.Enabled = false;
+                        return;
+                    }
+                    errorProvider.Clear();
+                    Bt_Start.Enabled = true;
+                }
+                else
+                {
+                    errorProvider.SetError(Tx_Additional_Input, "Нельзя привести к целому числу");
+                    Bt_Start.Enabled = false;
+                    return;
+                }
             }
+        }
+        private void Tx_Input_TextChanged(object sender, EventArgs e)
+        {
+            check_both_inputs();
         }
         void Methods_State(bool state)
         {
@@ -534,23 +557,7 @@ namespace WinFormsAppPrimeTens
 
         private void Tx_Additional_Input_TextChanged(object sender, EventArgs e)
         {
-            if (int.TryParse(Tx_Additional_Input.Text, out int n))
-            {
-                if (n < 1)
-                {
-                    errorProvider.SetError(Tx_Additional_Input, "Слишком маленькое число");
-                    Bt_Start.Enabled = false;
-                    return;
-                }
-                errorProvider.Clear();
-                Bt_Start.Enabled = true;
-            }
-            else
-            {
-                errorProvider.SetError(Tx_Additional_Input, "Нельзя привести к целому числу");
-                Bt_Start.Enabled = false;
-                return;
-            }
+            check_both_inputs();
         }
 
         private void Bt_Output_Click(object sender, EventArgs e)
