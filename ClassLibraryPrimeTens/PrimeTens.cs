@@ -156,7 +156,7 @@ namespace ClassLibraryPrimeTens
         /// </summary>
         /// <param name="n"> число для поиска делителей </param>
         /// <returns> список всех делителей числа </returns>
-        public static List<ulong> GetDivisors(ulong n)
+        public static List<ulong> GetDivisors(ulong n,CancellationToken ct)
         {
             List<ulong> res = new List<ulong>();
             res.Add(1);
@@ -169,6 +169,10 @@ namespace ClassLibraryPrimeTens
             }
             for (ulong i = 2; i <= sqrt && i > 0; i++)
             {
+                if (ct.IsCancellationRequested)
+                {
+                    return null;
+                }
                 if (n % i == 0)
                 {
                     res.Add(i);

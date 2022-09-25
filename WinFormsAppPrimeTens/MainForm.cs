@@ -12,6 +12,7 @@ namespace WinFormsAppPrimeTens
 
         const int min_num = 3;
         const int max_num = int.MaxValue - int.MaxValue % 10;
+        const ulong max_num_b = ulong.MaxValue - (ulong.MaxValue % 10);
 
         dynamic Cur_run;
         CancellationTokenSource Cur_cts;
@@ -64,7 +65,7 @@ namespace WinFormsAppPrimeTens
                 Cur_cts = new();
                 if (RB_Method_Erat.Checked)
                 {
-                    Cur_run = Task.Run(() => Start_Lookup_DivisorlessRange(Cur_cts.Token,Prime_Method.Erathosphenes));
+                    Cur_run = Task.Run(() => Start_Lookup_DivisorlessRange(Cur_cts.Token, Prime_Method.Erathosphenes));
                 }
                 else
                 {
@@ -72,7 +73,7 @@ namespace WinFormsAppPrimeTens
                 }
                 await Cur_run;
                 (int start, int end, long mls) result = Cur_run.Result;
-                if (result == (0,0,0))
+                if (result == (0, 0, 0))
                 {
                     Cur_run.Dispose();
                     SetControls(false);
@@ -85,21 +86,19 @@ namespace WinFormsAppPrimeTens
             }
             if (RB_Solver_Divisors.Checked)
             {
-                int num = int.Parse(Tx_Input.Text);
+                ulong num = ulong.Parse(Tx_Input.Text);
                 List<ulong> divisors;
-                divisors = PrimeTens.GetDivisors((ulong)num);
+                divisors = PrimeTens.GetDivisors(num);
                 RTx_Output.Text = $"Найдено {divisors.Count} делителей\n" +
                     $"Результаты по кнопке \"Вывод\"";
                 cur_data = (Data_Type.Divisors, divisors);
             }
             if (RB_Solver_BarChart.Checked)
             {
-                int num = int.Parse(Tx_Input.Text);
-                int len = int.Parse(Tx_Additional_Input.Text);
                 Cur_cts = new();
                 if (RB_Method_Erat.Checked)
                 {
-                    Cur_run = Task.Run(() => Start_Lookup_Chart(Cur_cts.Token,Prime_Method.Erathosphenes));
+                    Cur_run = Task.Run(() => Start_Lookup_Chart(Cur_cts.Token, Prime_Method.Erathosphenes));
                 }
                 else
                 {
@@ -113,7 +112,7 @@ namespace WinFormsAppPrimeTens
             }
             SetControls(false);
         }
-        (List<(int start, int end, int primeCount, double primePercent)> data,long mls) Start_Lookup_Chart(CancellationToken ct, Prime_Method method)
+        (List<(int start, int end, int primeCount, double primePercent)> data, long mls) Start_Lookup_Chart(CancellationToken ct, Prime_Method method)
         {
             int num = int.Parse(Tx_Input.Text);
             int len = int.Parse(Tx_Additional_Input.Text);
@@ -145,7 +144,7 @@ namespace WinFormsAppPrimeTens
             }
             return (null, 0);
         }
-        (int start, int end,long mls) Start_Lookup_DivisorlessRange(CancellationToken ct, Prime_Method method)
+        (int start, int end, long mls) Start_Lookup_DivisorlessRange(CancellationToken ct, Prime_Method method)
         {
             int num = int.Parse(Tx_Input.Text);
             Stopwatch tim = new Stopwatch();
@@ -167,19 +166,19 @@ namespace WinFormsAppPrimeTens
                 {
                     if (ct.IsCancellationRequested)
                     {
-                        return (0, 0,0);
+                        return (0, 0, 0);
                     }
                     RTx_Output.Invoke(new Action(() => RTx_Output.Text = $"{tim.ElapsedMilliseconds / 1000}.{tim.ElapsedMilliseconds / 100 % 10} с"));
                     Thread.Sleep(5);
                 }
                 if (ct.IsCancellationRequested)
                 {
-                    return (0, 0,0);
+                    return (0, 0, 0);
                 }
             }
             tim.Stop();
             long mls = tim.ElapsedMilliseconds;
-            return (start,end, mls);
+            return (start, end, mls);
         }
         (int min_count, int min_loc, int max_count, int max_loc, long mls) Start_Lookup_Segments(CancellationToken ct, Prime_Method Meth)
         {
@@ -253,29 +252,41 @@ namespace WinFormsAppPrimeTens
 
         private void Tx_Input_TextChanged(object sender, EventArgs e)
         {
-            if (int.TryParse(Tx_Input.Text, out int n))
+            if (ulong.TryParse(Tx_Input.Text, out ulong n))
             {
-                int nRound = n - n % 10;
-                if (nRound > max_num)
+                if (RB_Method_Fast.Checked)
                 {
-                    errorProvider.SetError(Tx_Input, "Слишком большое число");
-                    Bt_Start.Enabled = false;
-                    return;
+                    if (n > max_num_b)
+                    {
+                        errorProvider.SetError(Tx_Input, "Слишком большое число");
+                        Bt_Start.Enabled = false;
+                        return;
+                    }
+                    if (n < min_num)
+                    {
+                        errorProvider.SetError(Tx_Input, "Слишком маленькое число");
+                        Bt_Start.Enabled = false;
+                        return;
+                    }
                 }
-                if (nRound < min_num)
+                else
                 {
-                    errorProvider.SetError(Tx_Input, "Слишком маленькое число");
-                    Bt_Start.Enabled = false;
-                    return;
+                    if (n > max_num)
+                    {
+                        errorProvider.SetError(Tx_Input, "Слишком большое число");
+                        Bt_Start.Enabled = false;
+                        return;
+                    }
+                    if (n < min_num)
+                    {
+                        errorProvider.SetError(Tx_Input, "Слишком маленькое число");
+                        Bt_Start.Enabled = false;
+                        return;
+                    }
                 }
+
                 errorProvider.Clear();
                 Bt_Start.Enabled = true;
-            }
-            else if (long.TryParse(Tx_Input.Text, out long _))
-            {
-                errorProvider.SetError(Tx_Input, "Слишком большое число");
-                Bt_Start.Enabled = false;
-                return;
             }
             else
             {
@@ -290,48 +301,98 @@ namespace WinFormsAppPrimeTens
             {
                 RB_Method_Erat.Enabled = true;
                 RB_Method_Root.Enabled = true;
+                RB_Method_Fast.Enabled = true;
             }
             else
             {
                 RB_Method_Erat.Enabled = false;
                 RB_Method_Root.Enabled = false;
+                RB_Method_Fast.Enabled = false;
+            }
+        }
+        void help_determine()
+        {
+            if (RB_Solver_MinMaxSeg.Checked)
+            {
+                if (RB_Method_Fast.Checked)
+                {
+                    Lb_Help.Text =
+                "Поиск сегментов длиной k в диапазоне [2, n] с минимальным и максимальным количеством простых чисел.\r\n" +
+                $"Входные данные: натуральное число n, в диапазоне [3, {max_num_b}], натуральное число k, в диапазоне [1, 99999].";
+                }
+                else
+                {
+                    Lb_Help.Text =
+                "Поиск сегментов длиной k в диапазоне [2, n] с минимальным и максимальным количеством простых чисел.\r\n" +
+                $"Входные данные: натуральное число n, в диапазоне [3, {max_num}], натуральное число k, в диапазоне [1, 99999].";
+                }
+            }
+            else if (RB_Solver_MaxSegment.Checked)
+            {
+                if (RB_Method_Fast.Checked)
+                {
+                    Lb_Help.Text = "Поиск наибольшего отрезка не содержащего простых чисел в промежутке [2, n].\r\n" +
+                $"Входные данные: натуральное число n, в диапазоне [3, {max_num_b}].";
+                }
+                else
+                {
+                    Lb_Help.Text = "Поиск наибольшего отрезка не содержащего простых чисел в промежутке [2, n].\r\n" +
+                $"Входные данные: натуральное число n, в диапазоне [3, {max_num}].";
+                }
+            }
+            else if (RB_Solver_Divisors.Checked)
+            {
+                Lb_Help.Text = "Поиск всех делителей числа n, включая 1 и n.\r\n" +
+                $"Входные данные: натуральное число n, в диапазоне [3, {max_num_b}].";
+            }
+            else if (RB_Solver_BarChart.Checked)
+            {
+                if (RB_Method_Fast.Checked)
+                {
+                    Lb_Help.Text = "Выводит распределение простых чисел на участке [2, n], с количеством сегментов k.\r\n" +
+                $"Входные данные: натуральное число n, в диапазоне [3, {max_num_b}], натуральное число k, в диапазоне [1, 99999].";
+                }
+                else
+                {
+                    Lb_Help.Text = "Выводит распределение простых чисел на участке [2, n], с количеством сегментов k.\r\n" +
+                $"Входные данные: натуральное число n, в диапазоне [3, {max_num}], натуральное число k, в диапазоне [1, 99999].";
+                }
             }
         }
         private void RB_Solver_MinMaxSeg_CheckedChanged(object sender, EventArgs e)
         {
             Methods_State(true);
             Tx_Additional_Input.Enabled = true;
-            Lb_Help.Text =
-                "Поиск сегментов длиной k в диапазоне [2, n] с минимальным и максимальным количеством простых чисел.\r\n" +
-                "Входные данные: натуральное число n, в диапазоне [3, 2147483640], натуральное число k, в диапазоне [1, 99999].";
+            help_determine();
             Bt_Output.Enabled = false;
+            Tx_Input_TextChanged(sender, e);
         }
 
         private void RB_Solver_MaxSegment_CheckedChanged(object sender, EventArgs e)
         {
             Methods_State(true);
             Tx_Additional_Input.Enabled = false;
-            Lb_Help.Text = "Поиск наибольшего отрезка не содержащего простых чисел в промежутке [2, n].\r\n" +
-                "Входные данные: натуральное число n, в диапазоне [3, 2147483640].";
+            help_determine();
             Bt_Output.Enabled = false;
+            Tx_Input_TextChanged(sender, e);
         }
 
         private void RB_Solver_Divisors_CheckedChanged(object sender, EventArgs e)
         {
             Methods_State(false);
             Tx_Additional_Input.Enabled = false;
-            Lb_Help.Text = "Поиск всех делителей числа n, включая 1 и n.\r\n" +
-                "Входные данные: натуральное число n, в диапазоне [3, 2147483640].";
+            help_determine();
             Bt_Output.Enabled = true;
+            Tx_Input_TextChanged(sender, e);
         }
 
         private void RB_Solver_BarChart_CheckedChanged(object sender, EventArgs e)
         {
             Methods_State(true);
             Tx_Additional_Input.Enabled = true;
-            Lb_Help.Text = "Выводит распределение простых чисел на участке [2, n], с количеством сегментов k.\r\n" +
-                "Входные данные: натуральное число n, в диапазоне [3, 2147483640], натуральное число k, в диапазоне [1, 99999].";
+            help_determine();
             Bt_Output.Enabled = true;
+            Tx_Input_TextChanged(sender, e);
         }
 
         private void Tx_Additional_Input_TextChanged(object sender, EventArgs e)
@@ -371,6 +432,24 @@ namespace WinFormsAppPrimeTens
                     break;
             }
 
+        }
+
+        private void RB_Method_Fast_CheckedChanged(object sender, EventArgs e)
+        {
+            Tx_Input_TextChanged(sender, e);
+            help_determine();
+        }
+
+        private void RB_Method_Erat_CheckedChanged(object sender, EventArgs e)
+        {
+            Tx_Input_TextChanged(sender, e);
+            help_determine();
+        }
+
+        private void RB_Method_Root_CheckedChanged(object sender, EventArgs e)
+        {
+            Tx_Input_TextChanged(sender, e);
+            help_determine();
         }
     }
 }
