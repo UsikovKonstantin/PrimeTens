@@ -26,7 +26,7 @@ namespace ClassLibraryPrimeTens
         /// <param name="n"> верхняя граница массива </param>
         /// <param name="ct"> переменная, с помощью которой можно досрочно завершить выполнение метода </param>
         /// <returns> массив булевых значений, указывающих, является ли число простым </returns>
-        private static BitArray GetPrimeNumbersEratosthenes(int n, CancellationToken ct)
+        public static BitArray GetPrimeNumbersEratosthenes(int n, CancellationToken ct)
         {
             BitArray prime = GetArray(n);
 
@@ -55,7 +55,7 @@ namespace ClassLibraryPrimeTens
         /// </summary>
         /// <param name="n"> верхняя граница массива </param>
         /// <returns> массив булевых значений </returns>
-        private static BitArray GetArray(int n)
+        public static BitArray GetArray(int n)
         {
             BitArray arr = new BitArray(n + 1);
             arr.SetAll(true);
@@ -74,7 +74,7 @@ namespace ClassLibraryPrimeTens
         /// <param name="n"> верхняя граница массива </param>
         /// <param name="ct"> переменная, с помощью которой можно досрочно завершить выполнение метода </param>
         /// <returns> массив булевых значений, указывающих, является ли число простым </returns>
-        private static BitArray GetPrimeNumbersSqrt(int n, CancellationToken ct)
+        public static BitArray GetPrimeNumbersSqrt(int n, CancellationToken ct)
         {
             BitArray prime = new BitArray(n + 1);
             for (int i = 2; i <= n; i++)
@@ -93,7 +93,7 @@ namespace ClassLibraryPrimeTens
         /// </summary>
         /// <param name="x"> число для проверки </param>
         /// <returns> true - если число простое, false - если составное </returns>
-        private static bool IsPrime(int x)
+        public static bool IsPrime(int x)
         {
             for (int i = 2; i <= (int)Math.Sqrt(x); i++)
             {
@@ -261,8 +261,6 @@ namespace ClassLibraryPrimeTens
             }
             return result;
         }
-
-
 
         /// <summary>
         /// Находит наибольшие сегменты чисел, в которых максимальное и минимальное количество простых чисел.
