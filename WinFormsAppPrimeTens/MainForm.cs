@@ -562,6 +562,11 @@ namespace WinFormsAppPrimeTens
 
         private void Bt_Output_Click(object sender, EventArgs e)
         {
+            if (cur_data.data == null)
+            {
+                Bt_Output.Enabled = false;
+                return;
+            }
             switch (cur_data.disp)
             {
                 case Data_Type.Divisors:
