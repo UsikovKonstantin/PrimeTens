@@ -114,6 +114,16 @@ namespace WinFormsAppPrimeTens
             }
             if (RB_Solver_BarChart.Checked)
             {
+                ulong num = ulong.Parse(Tx_Input.Text);
+                int len = int.Parse(Tx_Additional_Input.Text);
+                if (num % (ulong)len != 0)
+                {
+                    num = num - (num % (ulong)len);
+                    Tx_Input.Text = num.ToString();
+                    SetControls(false);
+                    return;
+                }
+
                 Cur_cts = new();
                 if (RB_Method_Erat.Checked)
                 {
