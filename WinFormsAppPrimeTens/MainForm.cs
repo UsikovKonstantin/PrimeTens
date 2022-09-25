@@ -86,8 +86,8 @@ namespace WinFormsAppPrimeTens
             if (RB_Solver_Divisors.Checked)
             {
                 int num = int.Parse(Tx_Input.Text);
-                List<int> divisors;
-                divisors = PrimeTens.GetDivisors(num);
+                List<ulong> divisors;
+                divisors = PrimeTens.GetDivisors((ulong)num);
                 RTx_Output.Text = $"Найдено {divisors.Count} делителей\n" +
                     $"Результаты по кнопке \"Вывод\"";
                 cur_data = (Data_Type.Divisors, divisors);

@@ -2,20 +2,41 @@
 using System.Collections;
 using System.Diagnostics;
 
-int n = 1000;
-int segmentCount = 10;
-var res = PrimeTens.GetPrimeDistribution(PrimeTens.GetPrimeNumbersEratosthenes(n, new CancellationToken()), segmentCount);
+
+
+int n = 100;
+int k = 10;
+
+var res = PrimeTens.GetPrimeDistribution((ulong)n, (ulong)k, new CancellationToken());
 foreach (var item in res)
 {
-    Console.WriteLine($"{item.start}-{item.end} {item.primeCount} {item.primePercent}");
+    Console.WriteLine($"{item.start} {item.end} {item.primeCount} {item.primePercent}");
 }
 Console.WriteLine();
 
+var res2 = PrimeTens.GetPrimeDistribution(n, k, Prime_Method.Erathosphenes, new CancellationToken());
+foreach (var item in res2)
+{
+    Console.WriteLine($"{item.start} {item.end} {item.primeCount} {item.primePercent}");
+}
 
-int k = 40;
-var r = PrimeTens.GetMinMaxTens(PrimeTens.GetPrimeNumbersEratosthenes(n, new CancellationToken()), k, new CancellationToken());
-Console.WriteLine($"{r.minRangeStart}-{r.minRangeStart + k - 1} {r.minCount}");
-Console.WriteLine($"{r.maxRangeStart}-{r.maxRangeStart + k - 1} {r.maxCount}");
+
+
+
+//int n = 1000;
+//int segmentCount = 10;
+//var res = PrimeTens.GetPrimeDistribution(PrimeTens.GetPrimeNumbersEratosthenes(n, new CancellationToken()), segmentCount);
+//foreach (var item in res)
+//{
+//    Console.WriteLine($"{item.start}-{item.end} {item.primeCount} {item.primePercent}");
+//}
+//Console.WriteLine();
+
+
+//int k = 40;
+//var r = PrimeTens.GetMinMaxTens(PrimeTens.GetPrimeNumbersEratosthenes(n, new CancellationToken()), k, new CancellationToken());
+//Console.WriteLine($"{r.minRangeStart}-{r.minRangeStart + k - 1} {r.minCount}");
+//Console.WriteLine($"{r.maxRangeStart}-{r.maxRangeStart + k - 1} {r.maxCount}");
 
 
 //int n = 1_000_000;
