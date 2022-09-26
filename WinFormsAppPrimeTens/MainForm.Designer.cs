@@ -56,7 +56,8 @@
             this.Tx_Additional_Input = new System.Windows.Forms.TextBox();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.Lb_Help = new System.Windows.Forms.Label();
-            this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
+            this.errorProviderMain = new System.Windows.Forms.ErrorProvider(this.components);
+            this.errorProviderK = new System.Windows.Forms.ErrorProvider(this.components);
             this.tableLayoutPanel1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -70,7 +71,8 @@
             this.groupBox1.SuspendLayout();
             this.tableLayoutPanel5.SuspendLayout();
             this.groupBox5.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProviderMain)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProviderK)).BeginInit();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -381,7 +383,7 @@
             this.Tx_Additional_Input.Dock = System.Windows.Forms.DockStyle.Fill;
             this.Tx_Additional_Input.Location = new System.Drawing.Point(3, 54);
             this.Tx_Additional_Input.Margin = new System.Windows.Forms.Padding(3, 3, 20, 3);
-            this.Tx_Additional_Input.MaxLength = 5;
+            this.Tx_Additional_Input.MaxLength = 30;
             this.Tx_Additional_Input.Name = "Tx_Additional_Input";
             this.Tx_Additional_Input.Size = new System.Drawing.Size(754, 23);
             this.Tx_Additional_Input.TabIndex = 1;
@@ -411,10 +413,15 @@
     " [10, 2147483640].";
             this.Lb_Help.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // errorProvider
+            // errorProviderMain
             // 
-            this.errorProvider.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
-            this.errorProvider.ContainerControl = this;
+            this.errorProviderMain.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
+            this.errorProviderMain.ContainerControl = this;
+            // 
+            // errorProviderK
+            // 
+            this.errorProviderK.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
+            this.errorProviderK.ContainerControl = this;
             // 
             // MainForm
             // 
@@ -441,7 +448,8 @@
             this.tableLayoutPanel5.ResumeLayout(false);
             this.tableLayoutPanel5.PerformLayout();
             this.groupBox5.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProviderMain)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProviderK)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -461,7 +469,7 @@
         private RadioButton RB_Method_Erat;
         private RadioButton RB_Method_Root;
         private Button Bt_End;
-        private ErrorProvider errorProvider;
+        private ErrorProvider errorProviderMain;
         private TableLayoutPanel tableLayoutPanel5;
         private Label Lb_Help;
         private TableLayoutPanel tableLayoutPanel6;
@@ -476,5 +484,6 @@
         private RichTextBox RTx_Output;
         private Button Bt_Output;
         private RadioButton RB_Method_Fast;
+        private ErrorProvider errorProviderK;
     }
 }

@@ -8,20 +8,22 @@ namespace WinFormsAppPrimeTens
         public MainForm()
         {
             InitializeComponent();
+            help_determine();
         }
 
         const int min_num = 3;
-        const int max_num = int.MaxValue - int.MaxValue % 10;
-        const ulong max_num_b = ulong.MaxValue - (ulong.MaxValue % 10);
+        const int max_num = int.MaxValue - 1;
+        const ulong max_num_b = ulong.MaxValue - 1;
 
-        dynamic Cur_run;
-        CancellationTokenSource Cur_cts;
         enum Data_Type
         {
             Divisors,
             Chart
         }
+        dynamic Cur_run;
+        CancellationTokenSource Cur_cts;
         (Data_Type disp, dynamic data) cur_data;
+
         private async void Bt_Start_Click(object sender, EventArgs e)
         {
             SetControls(true);
@@ -150,6 +152,7 @@ namespace WinFormsAppPrimeTens
             }
             SetControls(false);
         }
+
         (List<ulong> data, long mls) Start_Lookup_Divisors(CancellationToken ct)
         {
             ulong num = ulong.Parse(Tx_Input.Text);
@@ -181,6 +184,7 @@ namespace WinFormsAppPrimeTens
             }
             return (null, 0);
         }
+
         (List<(ulong start, ulong end, ulong primeCount, double primePercent)> data, long mls) Start_Lookup_Chart(CancellationToken ct, Prime_Method method)
         {
             ulong num = ulong.Parse(Tx_Input.Text);
@@ -237,6 +241,7 @@ namespace WinFormsAppPrimeTens
             }
             return (null, 0);
         }
+
         (ulong start, ulong end, long mls) Start_Lookup_DivisorlessRange(CancellationToken ct, Prime_Method method)
         {
             ulong num = ulong.Parse(Tx_Input.Text);
@@ -292,6 +297,7 @@ namespace WinFormsAppPrimeTens
             long mls = tim.ElapsedMilliseconds;
             return (start, end, mls);
         }
+
         (ulong min_count, ulong min_loc, ulong max_count, ulong max_loc, long mls) Start_Lookup_Segments(CancellationToken ct, Prime_Method Meth)
         {
             ulong num = ulong.Parse(Tx_Input.Text);
@@ -385,76 +391,91 @@ namespace WinFormsAppPrimeTens
                 Bt_Output.Enabled = !isTaskRunning;
             }
         }
-        void check_both_inputs()
+
+        bool CheckMainInput()
         {
+            if (ulong.TryParse(Tx_Input.Text, out ulong n))
             {
-                if (ulong.TryParse(Tx_Input.Text, out ulong n))
+                if (RB_Method_Fast.Checked)
+                    if (n > max_num_b)
+                    {
+                        errorProviderMain.SetError(Tx_Input, "Слишком большое число");
+                        return false;
+                    }
+                else
+                    if (n > max_num)
+                    {
+                        errorProviderMain.SetError(Tx_Input, "Слишком большое число");
+                        return false;
+                    }
+                if (n < min_num)
+                {
+                    errorProviderMain.SetError(Tx_Input, "Слишком маленькое число");
+                    return false;
+                }
+
+                errorProviderMain.Clear();
+                return true;
+            }
+            else
+            {
+                errorProviderMain.SetError(Tx_Input, "Нельзя привести к целому числу");
+                return false;
+            }
+        }
+
+        bool CheckAdditionalInput()
+        {
+            if (ulong.TryParse(Tx_Additional_Input.Text, out ulong k))
+            {
+                const int minK = 1;
+                if (RB_Solver_MinMaxSeg.Checked)
                 {
                     if (RB_Method_Fast.Checked)
-                    {
-                        if (n > max_num_b)
+                        if (k > max_num_b)
                         {
-                            errorProvider.SetError(Tx_Input, "Слишком большое число");
-                            Bt_Start.Enabled = false;
-                            return;
+                            errorProviderK.SetError(Tx_Additional_Input, "Слишком большое число");
+                            return false;
                         }
-                        if (n < min_num)
-                        {
-                            errorProvider.SetError(Tx_Input, "Слишком маленькое число");
-                            Bt_Start.Enabled = false;
-                            return;
-                        }
-                    }
                     else
+                        if (k > max_num)
+                        {
+                            errorProviderK.SetError(Tx_Additional_Input, "Слишком большое число");
+                            return false;
+                        }
+                }
+                else if (RB_Solver_BarChart.Checked)
+                {
+                    const int maxK = 99999;
+                    if (k > maxK)
                     {
-                        if (n > max_num)
-                        {
-                            errorProvider.SetError(Tx_Input, "Слишком большое число");
-                            Bt_Start.Enabled = false;
-                            return;
-                        }
-                        if (n < min_num)
-                        {
-                            errorProvider.SetError(Tx_Input, "Слишком маленькое число");
-                            Bt_Start.Enabled = false;
-                            return;
-                        }
+                        errorProviderK.SetError(Tx_Additional_Input, "Слишком большое число");
+                        return false;
                     }
+                }
+                if (k < minK)
+                {
+                    errorProviderK.SetError(Tx_Additional_Input, "Слишком маленькое число");
+                    return false;
+                }
 
-                    errorProvider.Clear();
-                    Bt_Start.Enabled = true;
-                }
-                else
-                {
-                    errorProvider.SetError(Tx_Input, "Нельзя привести к целому числу");
-                    Bt_Start.Enabled = false;
-                    return;
-                }
+                errorProviderK.Clear();
+                return true;
             }
+            else
             {
-                if (int.TryParse(Tx_Additional_Input.Text, out int n))
-                {
-                    if (n < 1)
-                    {
-                        errorProvider.SetError(Tx_Additional_Input, "Слишком маленькое число");
-                        Bt_Start.Enabled = false;
-                        return;
-                    }
-                    errorProvider.Clear();
-                    Bt_Start.Enabled = true;
-                }
-                else
-                {
-                    errorProvider.SetError(Tx_Additional_Input, "Нельзя привести к целому числу");
-                    Bt_Start.Enabled = false;
-                    return;
-                }
+                errorProviderK.SetError(Tx_Additional_Input, "Нельзя привести к целому числу");
+                return false;
             }
         }
-        private void Tx_Input_TextChanged(object sender, EventArgs e)
+
+        void check_both_inputs()
         {
-            check_both_inputs();
+            bool b1 = CheckMainInput();
+            bool b2 = CheckAdditionalInput();
+            Bt_Start.Enabled = b1 && b2;
         }
+
         void Methods_State(bool state)
         {
             if (state)
@@ -470,62 +491,51 @@ namespace WinFormsAppPrimeTens
                 RB_Method_Fast.Enabled = false;
             }
         }
+
         void help_determine()
         {
             if (RB_Solver_MinMaxSeg.Checked)
             {
                 if (RB_Method_Fast.Checked)
-                {
-                    Lb_Help.Text =
-                "Поиск сегментов длиной k в диапазоне [2, n] с минимальным и максимальным количеством простых чисел.\r\n" +
-                $"Входные данные: натуральное число n, в диапазоне [3, {max_num_b}], натуральное число k, в диапазоне [1, 99999].";
-                }
+                    Lb_Help.Text = "Поиск сегментов длиной k в диапазоне [2, n] с минимальным и максимальным количеством простых чисел.\r\n" +
+                                  $"Входные данные: натуральное число n, в диапазоне [3, {max_num_b}], натуральное число k, в диапазоне [1, {max_num_b}].";
                 else
-                {
-                    Lb_Help.Text =
-                "Поиск сегментов длиной k в диапазоне [2, n] с минимальным и максимальным количеством простых чисел.\r\n" +
-                $"Входные данные: натуральное число n, в диапазоне [3, {max_num}], натуральное число k, в диапазоне [1, 99999].";
-                }
+                    Lb_Help.Text = "Поиск сегментов длиной k в диапазоне [2, n] с минимальным и максимальным количеством простых чисел.\r\n" +
+                                  $"Входные данные: натуральное число n, в диапазоне [3, {max_num}], натуральное число k, в диапазоне [1, {max_num}].";
             }
             else if (RB_Solver_MaxSegment.Checked)
             {
                 if (RB_Method_Fast.Checked)
-                {
                     Lb_Help.Text = "Поиск наибольшего отрезка не содержащего простых чисел в промежутке [2, n].\r\n" +
-                $"Входные данные: натуральное число n, в диапазоне [3, {max_num_b}].";
-                }
+                                  $"Входные данные: натуральное число n, в диапазоне [3, {max_num_b}].";
                 else
-                {
                     Lb_Help.Text = "Поиск наибольшего отрезка не содержащего простых чисел в промежутке [2, n].\r\n" +
-                $"Входные данные: натуральное число n, в диапазоне [3, {max_num}].";
-                }
+                                  $"Входные данные: натуральное число n, в диапазоне [3, {max_num}].";
             }
             else if (RB_Solver_Divisors.Checked)
             {
                 Lb_Help.Text = "Поиск всех делителей числа n, включая 1 и n.\r\n" +
-                $"Входные данные: натуральное число n, в диапазоне [3, {max_num_b}].";
+                              $"Входные данные: натуральное число n, в диапазоне [3, {max_num_b}].";
             }
             else if (RB_Solver_BarChart.Checked)
             {
+                const int maxSeg = 99999;
                 if (RB_Method_Fast.Checked)
-                {
                     Lb_Help.Text = "Выводит распределение простых чисел на участке [2, n], с количеством сегментов k.\r\n" +
-                $"Входные данные: натуральное число n, в диапазоне [3, {max_num_b}], натуральное число k, в диапазоне [1, 99999].";
-                }
+                                  $"Входные данные: натуральное число n, в диапазоне [3, {max_num_b}], натуральное число k, в диапазоне [1, {maxSeg}].";
                 else
-                {
                     Lb_Help.Text = "Выводит распределение простых чисел на участке [2, n], с количеством сегментов k.\r\n" +
-                $"Входные данные: натуральное число n, в диапазоне [3, {max_num}], натуральное число k, в диапазоне [1, 99999].";
-                }
+                                  $"Входные данные: натуральное число n, в диапазоне [3, {max_num}], натуральное число k, в диапазоне [1, {maxSeg}].";
             }
         }
+
         private void RB_Solver_MinMaxSeg_CheckedChanged(object sender, EventArgs e)
         {
             Methods_State(true);
             Tx_Additional_Input.Enabled = true;
             help_determine();
             Bt_Output.Enabled = false;
-            Tx_Input_TextChanged(sender, e);
+            check_both_inputs();
         }
 
         private void RB_Solver_MaxSegment_CheckedChanged(object sender, EventArgs e)
@@ -534,7 +544,7 @@ namespace WinFormsAppPrimeTens
             Tx_Additional_Input.Enabled = false;
             help_determine();
             Bt_Output.Enabled = false;
-            Tx_Input_TextChanged(sender, e);
+            check_both_inputs();
         }
 
         private void RB_Solver_Divisors_CheckedChanged(object sender, EventArgs e)
@@ -543,7 +553,7 @@ namespace WinFormsAppPrimeTens
             Tx_Additional_Input.Enabled = false;
             help_determine();
             Bt_Output.Enabled = true;
-            Tx_Input_TextChanged(sender, e);
+            check_both_inputs();
         }
 
         private void RB_Solver_BarChart_CheckedChanged(object sender, EventArgs e)
@@ -552,12 +562,34 @@ namespace WinFormsAppPrimeTens
             Tx_Additional_Input.Enabled = true;
             help_determine();
             Bt_Output.Enabled = true;
-            Tx_Input_TextChanged(sender, e);
+            check_both_inputs();
         }
 
         private void Tx_Additional_Input_TextChanged(object sender, EventArgs e)
         {
             check_both_inputs();
+        }
+
+        private void Tx_Input_TextChanged(object sender, EventArgs e)
+        {
+            check_both_inputs();
+        }
+        private void RB_Method_Fast_CheckedChanged(object sender, EventArgs e)
+        {
+            check_both_inputs();
+            help_determine();
+        }
+
+        private void RB_Method_Erat_CheckedChanged(object sender, EventArgs e)
+        {
+            check_both_inputs();
+            help_determine();
+        }
+
+        private void RB_Method_Root_CheckedChanged(object sender, EventArgs e)
+        {
+            check_both_inputs();
+            help_determine();
         }
 
         private void Bt_Output_Click(object sender, EventArgs e)
@@ -580,25 +612,6 @@ namespace WinFormsAppPrimeTens
                 default:
                     break;
             }
-
-        }
-
-        private void RB_Method_Fast_CheckedChanged(object sender, EventArgs e)
-        {
-            Tx_Input_TextChanged(sender, e);
-            help_determine();
-        }
-
-        private void RB_Method_Erat_CheckedChanged(object sender, EventArgs e)
-        {
-            Tx_Input_TextChanged(sender, e);
-            help_determine();
-        }
-
-        private void RB_Method_Root_CheckedChanged(object sender, EventArgs e)
-        {
-            Tx_Input_TextChanged(sender, e);
-            help_determine();
         }
     }
 }
