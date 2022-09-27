@@ -1,7 +1,8 @@
 ﻿using System.Collections;
 using System.Runtime.CompilerServices;
-
+ 
 [assembly: InternalsVisibleTo("TestPrimeTens")]
+[assembly: InternalsVisibleTo("ConsoleAppPrimeTens")]
 
 namespace ClassLibraryPrimeTens
 {
@@ -160,7 +161,7 @@ namespace ClassLibraryPrimeTens
         /// </summary>
         /// <param name="n"> число для поиска делителей </param>
         /// <returns> список всех делителей числа </returns>
-        public static List<ulong> GetDivisors(ulong n,CancellationToken ct)
+        public static List<ulong> GetDivisors(ulong n, CancellationToken ct)
         {
             List<ulong> res = new List<ulong>();
             res.Add(1);
@@ -171,7 +172,7 @@ namespace ClassLibraryPrimeTens
                 res.Add(sqrt);
                 sqrt--;
             }
-            for (ulong i = 2; i <= sqrt && i > 0; i++)
+            for (ulong i = 2; i <= sqrt; i++)
             {
                 if (ct.IsCancellationRequested)
                 {
@@ -318,7 +319,7 @@ namespace ClassLibraryPrimeTens
         /// <returns> кортеж из двух чисел, start - начало отрезка, end - конец отрезка </returns>
         public static (ulong start, ulong end) GetMaxRangeWithoutPrimeNumbers(ulong n, CancellationToken ct)
         {
-            ulong count = 0, maxCount = 0, start = 0, end = 0;
+            ulong count, maxCount = 0, start = 0, end = 0;
             UltimatePrimesSoE.nmrtr prime = new UltimatePrimesSoE.nmrtr();
             prime.MoveNext();
 
