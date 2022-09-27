@@ -15,14 +15,11 @@ namespace WinFormsAppPrimeTens
         const int max_num = int.MaxValue - 1;
         const ulong max_num_b = ulong.MaxValue - 1;
 
-        enum Data_Type
-        {
-            Divisors,
-            Chart
-        }
-        dynamic Cur_run;
+        Task<(ulong min_count, ulong min_loc, ulong max_count, ulong max_loc, long mls)> Cur_run_segments;
+        Task<(ulong start, ulong end, long mls)> Cur_run_max_segment;
+        Task<(List<(ulong start, ulong end, ulong primeCount, double primePercent)> data, long mls)> Cur_run_chart;
         CancellationTokenSource Cur_cts;
-        (Data_Type disp, dynamic data) cur_data;
+        List<(ulong start, ulong end, ulong primeCount, double primePercent)> cur_data;
 
         private async void Bt_Start_Click(object sender, EventArgs e)
         {
@@ -42,21 +39,21 @@ namespace WinFormsAppPrimeTens
 
                 if (RB_Method_Erat.Checked)
                 {
-                    Cur_run = Task.Run(() => Start_Lookup_Segments(Cur_cts.Token, Prime_Method.Erathosphenes));
+                    Cur_run_segments = Task.Run(() => Start_Lookup_Segments(Cur_cts.Token, Prime_Method.Erathosphenes));
                 }
                 else if (RB_Method_Fast.Checked)
                 {
-                    Cur_run = Task.Run(() => Start_Lookup_Segments(Cur_cts.Token, Prime_Method.Fast_Lookup));
+                    Cur_run_segments = Task.Run(() => Start_Lookup_Segments(Cur_cts.Token, Prime_Method.Fast_Lookup));
                 }
                 else
                 {
-                    Cur_run = Task.Run(() => Start_Lookup_Segments(Cur_cts.Token, Prime_Method.Division_Lookup));
+                    Cur_run_segments = Task.Run(() => Start_Lookup_Segments(Cur_cts.Token, Prime_Method.Division_Lookup));
                 }
-                await Cur_run;
-                (ulong min_count, ulong min_loc, ulong max_count, ulong max_loc, long mls) result = Cur_run.Result;
+                await Cur_run_segments;
+                (ulong min_count, ulong min_loc, ulong max_count, ulong max_loc, long mls) result = Cur_run_segments.Result;
                 if (result == (0, 0, 0, 0, 0))
                 {
-                    Cur_run.Dispose();
+                    Cur_run_segments.Dispose();
                     SetControls(false);
                     return;
                 }
@@ -71,21 +68,21 @@ namespace WinFormsAppPrimeTens
                 Cur_cts = new();
                 if (RB_Method_Erat.Checked)
                 {
-                    Cur_run = Task.Run(() => Start_Lookup_DivisorlessRange(Cur_cts.Token, Prime_Method.Erathosphenes));
+                    Cur_run_max_segment = Task.Run(() => Start_Lookup_DivisorlessRange(Cur_cts.Token, Prime_Method.Erathosphenes));
                 }
                 else if (RB_Method_Fast.Checked)
                 {
-                    Cur_run = Task.Run(() => Start_Lookup_DivisorlessRange(Cur_cts.Token, Prime_Method.Fast_Lookup));
+                    Cur_run_max_segment = Task.Run(() => Start_Lookup_DivisorlessRange(Cur_cts.Token, Prime_Method.Fast_Lookup));
                 }
                 else
                 {
-                    Cur_run = Task.Run(() => Start_Lookup_DivisorlessRange(Cur_cts.Token, Prime_Method.Division_Lookup));
+                    Cur_run_max_segment = Task.Run(() => Start_Lookup_DivisorlessRange(Cur_cts.Token, Prime_Method.Division_Lookup));
                 }
-                await Cur_run;
-                (ulong start, ulong end, long mls) result = Cur_run.Result;
+                await Cur_run_max_segment;
+                (ulong start, ulong end, long mls) result = Cur_run_max_segment.Result;
                 if (result == (0, 0, 0))
                 {
-                    Cur_run.Dispose();
+                    Cur_run_max_segment.Dispose();
                     SetControls(false);
                     return;
                 }
@@ -94,25 +91,6 @@ namespace WinFormsAppPrimeTens
                     $"Длина сегмента {result.end - result.start}\n" +
                     $"Время выполнения {result.mls}мс";
             }
-            //if (RB_Solver_Divisors.Checked)
-            //{
-            //    ulong num = ulong.Parse(Tx_Input.Text);
-            //    (List<ulong> data, long mls) divisors;
-            //    Cur_cts = new();
-            //    Cur_run = Task.Run(() => Start_Lookup_Divisors(Cur_cts.Token));
-            //    await Cur_run;
-            //    divisors = Cur_run.Result;
-            //    if (divisors == (null, 0))
-            //    {
-            //        Cur_run.Dispose();
-            //        SetControls(false);
-            //        return;
-            //    }
-            //    RTx_Output.Text = $"Найдено {divisors.data.Count} делителей\n" +
-            //        $"Время выполнения {divisors.mls}мс" +
-            //        $"Результаты по кнопке \"Вывод\"";
-            //    cur_data = (Data_Type.Divisors, divisors.data);
-            //}
             if (RB_Solver_BarChart.Checked)
             {
                 ulong num = ulong.Parse(Tx_Input.Text);
@@ -128,174 +106,29 @@ namespace WinFormsAppPrimeTens
                 Cur_cts = new();
                 if (RB_Method_Erat.Checked)
                 {
-                    Cur_run = Task.Run(() => Start_Lookup_Chart(Cur_cts.Token, Prime_Method.Erathosphenes));
+                    Cur_run_chart = Task.Run(() => Start_Lookup_Chart(Cur_cts.Token, Prime_Method.Erathosphenes));
                 }
                 else if (RB_Method_Fast.Checked)
                 {
-                    Cur_run = Task.Run(() => Start_Lookup_Chart(Cur_cts.Token, Prime_Method.Fast_Lookup));
+                    Cur_run_chart = Task.Run(() => Start_Lookup_Chart(Cur_cts.Token, Prime_Method.Fast_Lookup));
                 }
                 else
                 {
-                    Cur_run = Task.Run(() => Start_Lookup_Chart(Cur_cts.Token, Prime_Method.Division_Lookup));
+                    Cur_run_chart = Task.Run(() => Start_Lookup_Chart(Cur_cts.Token, Prime_Method.Division_Lookup));
                 }
-                await Cur_run;
-                (List<(ulong start, ulong end, ulong primeCount, double primePercent)> data, long mls) result = Cur_run.Result;
+                await Cur_run_chart;
+                (List<(ulong start, ulong end, ulong primeCount, double primePercent)> data, long mls) result = Cur_run_chart.Result;
                 if (result == (null, 0))
                 {
-                    Cur_run.Dispose();
+                    Cur_run_chart.Dispose();
                     SetControls(false);
                     return;
                 }
                 RTx_Output.Text = $"Время выполнения {result.mls}мс\n" +
                     $"Результаты по кнопке \"Вывод\"";
-                cur_data = (Data_Type.Chart, result.data);
+                cur_data = result.data;
             }
             SetControls(false);
-        }
-
-        (List<ulong> data, long mls) Start_Lookup_Divisors(CancellationToken ct)
-        {
-            ulong num = ulong.Parse(Tx_Input.Text);
-            Stopwatch sw = Stopwatch.StartNew();
-            Task<List<ulong>> tas;
-            tas = Task.Run(() => PrimeTens.GetDivisors(num, ct));
-            bool running = true;
-            while (running)
-            {
-                if (tas.Status == TaskStatus.RanToCompletion)
-                {
-                    var temp = tas.Result;
-                    sw.Stop();
-                    return (temp, sw.ElapsedMilliseconds);
-                }
-                else
-                {
-                    if (ct.IsCancellationRequested)
-                    {
-                        return (null, 0);
-                    }
-                    RTx_Output.Invoke(new Action(() => RTx_Output.Text = $"{sw.ElapsedMilliseconds / 1000}.{sw.ElapsedMilliseconds / 100 % 10} с"));
-                    Thread.Sleep(5);
-                }
-                if (ct.IsCancellationRequested)
-                {
-                    return (null, 0);
-                }
-            }
-            return (null, 0);
-        }
-
-        (List<(ulong start, ulong end, ulong primeCount, double primePercent)> data, long mls) Start_Lookup_Chart(CancellationToken ct, Prime_Method method)
-        {
-            ulong num = ulong.Parse(Tx_Input.Text);
-            int len = int.Parse(Tx_Additional_Input.Text);
-            Stopwatch sw = Stopwatch.StartNew();
-            dynamic tas;
-            if (method == Prime_Method.Fast_Lookup)
-            {
-                Task<List<(ulong start, ulong end, ulong primeCount, double primePercent)>> tase;
-                tase = Task.Run(() => PrimeTens.GetPrimeDistribution(num, (ulong)len, ct));
-                tas = tase;
-            }
-            else
-            {
-                Task<List<(int start, int end, int primeCount, double primePercent)>> tase;
-                tase = Task.Run(() => PrimeTens.GetPrimeDistribution((int)num, len, method, ct));
-                tas = tase;
-            }
-            bool running = true;
-            while (running)
-            {
-                if (tas.Status == TaskStatus.RanToCompletion)
-                {
-                    var temp = tas.Result;
-                    sw.Stop();
-                    List<(ulong start, ulong end, ulong primeCount, double primePercent)> data = new();
-
-                    if (temp[0].Item1 is int)
-                    {
-                        foreach (var item in temp)
-                        {
-                            data.Add(((ulong)item.Item1, (ulong)item.Item2, (ulong)item.Item3, item.Item4));
-                        }
-                    }
-                    else
-                    {
-                        data = temp;
-                    }
-                    return (data, sw.ElapsedMilliseconds);
-                }
-                else
-                {
-                    if (ct.IsCancellationRequested)
-                    {
-                        return (null, 0);
-                    }
-                    RTx_Output.Invoke(new Action(() => RTx_Output.Text = $"{sw.ElapsedMilliseconds / 1000}.{sw.ElapsedMilliseconds / 100 % 10} с"));
-                    Thread.Sleep(5);
-                }
-                if (ct.IsCancellationRequested)
-                {
-                    return (null, 0);
-                }
-            }
-            return (null, 0);
-        }
-
-        (ulong start, ulong end, long mls) Start_Lookup_DivisorlessRange(CancellationToken ct, Prime_Method method)
-        {
-            ulong num = ulong.Parse(Tx_Input.Text);
-            Stopwatch tim = new Stopwatch();
-            ulong start = 0, end = 0;
-            tim.Start();
-            dynamic tas;
-            if (method == Prime_Method.Fast_Lookup)
-            {
-                Task<(ulong, ulong)> temp;
-                temp = Task.Run(() => PrimeTens.GetMaxRangeWithoutPrimeNumbers(num, ct));
-                tas = temp;
-            }
-            else
-            {
-                Task<(int, int)> temp;
-                temp = Task.Run(() => PrimeTens.GetMaxRangeWithoutPrimeNumbers((int)num, method, ct));
-                tas = temp;
-            }
-            bool running = true;
-            while (running)
-            {
-                if (tas.Status == TaskStatus.RanToCompletion)
-                {
-                    var temp = tas.Result;
-                    if (temp.Item1 is ulong)
-                    {
-                        start = temp.Item1;
-                        end = temp.Item2;
-                    }
-                    else
-                    {
-                        start = (ulong)temp.Item1;
-                        end = (ulong)temp.Item2;
-                    }
-                    running = false;
-                }
-                else
-                {
-                    if (ct.IsCancellationRequested)
-                    {
-                        return (0, 0, 0);
-                    }
-                    RTx_Output.Invoke(new Action(() => RTx_Output.Text = $"{tim.ElapsedMilliseconds / 1000}.{tim.ElapsedMilliseconds / 100 % 10} с"));
-                    Thread.Sleep(5);
-                }
-                if (ct.IsCancellationRequested)
-                {
-                    return (0, 0, 0);
-                }
-            }
-            tim.Stop();
-            long mls = tim.ElapsedMilliseconds;
-            return (start, end, mls);
         }
 
         (ulong min_count, ulong min_loc, ulong max_count, ulong max_loc, long mls) Start_Lookup_Segments(CancellationToken ct, Prime_Method Meth)
@@ -361,6 +194,119 @@ namespace WinFormsAppPrimeTens
             return (min_count, min_loc, max_count, max_loc, mls);
         }
 
+        (ulong start, ulong end, long mls) Start_Lookup_DivisorlessRange(CancellationToken ct, Prime_Method method)
+        {
+            ulong num = ulong.Parse(Tx_Input.Text);
+            Stopwatch tim = new Stopwatch();
+            ulong start = 0, end = 0;
+            tim.Start();
+            dynamic tas;
+            if (method == Prime_Method.Fast_Lookup)
+            {
+                Task<(ulong, ulong)> temp;
+                temp = Task.Run(() => PrimeTens.GetMaxRangeWithoutPrimeNumbers(num, ct));
+                tas = temp;
+            }
+            else
+            {
+                Task<(int, int)> temp;
+                temp = Task.Run(() => PrimeTens.GetMaxRangeWithoutPrimeNumbers((int)num, method, ct));
+                tas = temp;
+            }
+            bool running = true;
+            while (running)
+            {
+                if (tas.Status == TaskStatus.RanToCompletion)
+                {
+                    var temp = tas.Result;
+                    if (temp.Item1 is ulong)
+                    {
+                        start = temp.Item1;
+                        end = temp.Item2;
+                    }
+                    else
+                    {
+                        start = (ulong)temp.Item1;
+                        end = (ulong)temp.Item2;
+                    }
+                    running = false;
+                }
+                else
+                {
+                    if (ct.IsCancellationRequested)
+                    {
+                        return (0, 0, 0);
+                    }
+                    RTx_Output.Invoke(new Action(() => RTx_Output.Text = $"{tim.ElapsedMilliseconds / 1000}.{tim.ElapsedMilliseconds / 100 % 10} с"));
+                    Thread.Sleep(5);
+                }
+                if (ct.IsCancellationRequested)
+                {
+                    return (0, 0, 0);
+                }
+            }
+            tim.Stop();
+            long mls = tim.ElapsedMilliseconds;
+            return (start, end, mls);
+        }
+
+        (List<(ulong start, ulong end, ulong primeCount, double primePercent)> data, long mls) Start_Lookup_Chart(CancellationToken ct, Prime_Method method)
+        {
+            ulong num = ulong.Parse(Tx_Input.Text);
+            int len = int.Parse(Tx_Additional_Input.Text);
+            Stopwatch sw = Stopwatch.StartNew();
+            dynamic tas;
+            if (method == Prime_Method.Fast_Lookup)
+            {
+                Task<List<(ulong start, ulong end, ulong primeCount, double primePercent)>> tase;
+                tase = Task.Run(() => PrimeTens.GetPrimeDistribution(num, (ulong)len, ct));
+                tas = tase;
+            }
+            else
+            {
+                Task<List<(int start, int end, int primeCount, double primePercent)>> tase;
+                tase = Task.Run(() => PrimeTens.GetPrimeDistribution((int)num, len, method, ct));
+                tas = tase;
+            }
+            bool running = true;
+            while (running)
+            {
+                if (tas.Status == TaskStatus.RanToCompletion)
+                {
+                    var temp = tas.Result;
+                    sw.Stop();
+                    List<(ulong start, ulong end, ulong primeCount, double primePercent)> data = new();
+
+                    if (temp[0].Item1 is int)
+                    {
+                        foreach (var item in temp)
+                        {
+                            data.Add(((ulong)item.Item1, (ulong)item.Item2, (ulong)item.Item3, item.Item4));
+                        }
+                    }
+                    else
+                    {
+                        data = temp;
+                    }
+                    return (data, sw.ElapsedMilliseconds);
+                }
+                else
+                {
+                    if (ct.IsCancellationRequested)
+                    {
+                        return (null, 0);
+                    }
+                    RTx_Output.Invoke(new Action(() => RTx_Output.Text = $"{sw.ElapsedMilliseconds / 1000}.{sw.ElapsedMilliseconds / 100 % 10} с"));
+                    Thread.Sleep(5);
+                }
+                if (ct.IsCancellationRequested)
+                {
+                    return (null, 0);
+                }
+            }
+            return (null, 0);
+        }
+
         private void Bt_End_Click(object sender, EventArgs e)
         {
             SetControls(false);
@@ -370,12 +316,6 @@ namespace WinFormsAppPrimeTens
         private void SetControls(bool isTaskRunning)
         {
             Bt_End.Enabled = isTaskRunning;
-            //if (!RB_Solver_Divisors.Checked)
-            //{
-            //    RB_Method_Erat.Enabled = !isTaskRunning;
-            //    RB_Method_Root.Enabled = !isTaskRunning;
-            //    RB_Method_Fast.Enabled = !isTaskRunning;
-            //}
             Tx_Input.Enabled = !isTaskRunning;
             Bt_Start.Enabled = !isTaskRunning;
             if (RB_Solver_MinMaxSeg.Checked || RB_Solver_BarChart.Checked)
@@ -383,9 +323,11 @@ namespace WinFormsAppPrimeTens
                 Tx_Additional_Input.Enabled = !isTaskRunning;
             }
             RB_Solver_BarChart.Enabled = !isTaskRunning;
-            //RB_Solver_Divisors.Enabled = !isTaskRunning;
             RB_Solver_MaxSegment.Enabled = !isTaskRunning;
             RB_Solver_MinMaxSeg.Enabled = !isTaskRunning;
+            RB_Method_Erat.Enabled = !isTaskRunning;
+            RB_Method_Fast.Enabled = !isTaskRunning;
+            RB_Method_Root.Enabled = !isTaskRunning;
             if (RB_Solver_BarChart.Checked)
             {
                 Bt_Output.Enabled = !isTaskRunning;
@@ -397,17 +339,18 @@ namespace WinFormsAppPrimeTens
             if (ulong.TryParse(Tx_Input.Text, out ulong n))
             {
                 if (RB_Method_Fast.Checked)
+                {
                     if (n > max_num_b)
                     {
                         errorProviderMain.SetError(Tx_Input, "Слишком большое число");
                         return false;
                     }
-                else
-                    if (n > max_num)
-                    {
-                        errorProviderMain.SetError(Tx_Input, "Слишком большое число");
-                        return false;
-                    }
+                }
+                else if (n > max_num)
+                {
+                    errorProviderMain.SetError(Tx_Input, "Слишком большое число");
+                    return false;
+                }
                 if (n < min_num)
                 {
                     errorProviderMain.SetError(Tx_Input, "Слишком маленькое число");
@@ -426,9 +369,10 @@ namespace WinFormsAppPrimeTens
 
         bool CheckAdditionalInput()
         {
+            const int minK = 1;
+            const int maxK = 99999;
             if (ulong.TryParse(Tx_Additional_Input.Text, out ulong k))
             {
-                const int minK = 1;
                 if (RB_Solver_MinMaxSeg.Checked)
                 {
                     if (RB_Method_Fast.Checked)
@@ -446,7 +390,6 @@ namespace WinFormsAppPrimeTens
                 }
                 else if (RB_Solver_BarChart.Checked)
                 {
-                    const int maxK = 99999;
                     if (k > maxK)
                     {
                         errorProviderK.SetError(Tx_Additional_Input, "Слишком большое число");
@@ -472,7 +415,9 @@ namespace WinFormsAppPrimeTens
         void check_both_inputs()
         {
             bool b1 = CheckMainInput();
-            bool b2 = CheckAdditionalInput();
+            bool b2 = true;
+            if (!RB_Solver_MaxSegment.Checked)
+                b2 = CheckAdditionalInput();
             Bt_Start.Enabled = b1 && b2;
         }
 
@@ -512,11 +457,6 @@ namespace WinFormsAppPrimeTens
                     Lb_Help.Text = "Поиск наибольшего отрезка не содержащего простых чисел в промежутке [2, n].\r\n" +
                                   $"Входные данные: натуральное число n, в диапазоне [3, {max_num}].";
             }
-            //else if (RB_Solver_Divisors.Checked)
-            //{
-            //    Lb_Help.Text = "Поиск всех делителей числа n, включая 1 и n.\r\n" +
-            //                  $"Входные данные: натуральное число n, в диапазоне [3, {max_num_b}].";
-            //}
             else if (RB_Solver_BarChart.Checked)
             {
                 const int maxSeg = 99999;
@@ -545,15 +485,7 @@ namespace WinFormsAppPrimeTens
             help_determine();
             Bt_Output.Enabled = false;
             check_both_inputs();
-        }
-
-        private void RB_Solver_Divisors_CheckedChanged(object sender, EventArgs e)
-        {
-            Methods_State(false);
-            Tx_Additional_Input.Enabled = false;
-            help_determine();
-            Bt_Output.Enabled = true;
-            check_both_inputs();
+            errorProviderK.Clear();
         }
 
         private void RB_Solver_BarChart_CheckedChanged(object sender, EventArgs e)
@@ -561,7 +493,12 @@ namespace WinFormsAppPrimeTens
             Methods_State(true);
             Tx_Additional_Input.Enabled = true;
             help_determine();
-            Bt_Output.Enabled = true;
+            Bt_Output.Enabled = false;
+            check_both_inputs();
+        }
+
+        private void Tx_Input_TextChanged(object sender, EventArgs e)
+        {
             check_both_inputs();
         }
 
@@ -570,10 +507,6 @@ namespace WinFormsAppPrimeTens
             check_both_inputs();
         }
 
-        private void Tx_Input_TextChanged(object sender, EventArgs e)
-        {
-            check_both_inputs();
-        }
         private void RB_Method_Fast_CheckedChanged(object sender, EventArgs e)
         {
             check_both_inputs();
@@ -594,24 +527,8 @@ namespace WinFormsAppPrimeTens
 
         private void Bt_Output_Click(object sender, EventArgs e)
         {
-            if (cur_data.data == null)
-            {
-                Bt_Output.Enabled = false;
-                return;
-            }
-            switch (cur_data.disp)
-            {
-                case Data_Type.Divisors:
-                    //Form formdiv = new Divisor_Output(cur_data.data);
-                    //formdiv.Show();
-                    //break;
-                case Data_Type.Chart:
-                    Form formchart = new Chart_Output(cur_data.data);
-                    formchart.Show();
-                    break;
-                default:
-                    break;
-            }
+            Form formchart = new Chart_Output(cur_data);
+            formchart.Show();
         }
 
         private void btnDivisors_Click(object sender, EventArgs e)
