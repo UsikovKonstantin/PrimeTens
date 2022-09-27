@@ -94,25 +94,25 @@ namespace WinFormsAppPrimeTens
                     $"Длина сегмента {result.end - result.start}\n" +
                     $"Время выполнения {result.mls}мс";
             }
-            if (RB_Solver_Divisors.Checked)
-            {
-                ulong num = ulong.Parse(Tx_Input.Text);
-                (List<ulong> data, long mls) divisors;
-                Cur_cts = new();
-                Cur_run = Task.Run(() => Start_Lookup_Divisors(Cur_cts.Token));
-                await Cur_run;
-                divisors = Cur_run.Result;
-                if (divisors == (null, 0))
-                {
-                    Cur_run.Dispose();
-                    SetControls(false);
-                    return;
-                }
-                RTx_Output.Text = $"Найдено {divisors.data.Count} делителей\n" +
-                    $"Время выполнения {divisors.mls}мс" +
-                    $"Результаты по кнопке \"Вывод\"";
-                cur_data = (Data_Type.Divisors, divisors.data);
-            }
+            //if (RB_Solver_Divisors.Checked)
+            //{
+            //    ulong num = ulong.Parse(Tx_Input.Text);
+            //    (List<ulong> data, long mls) divisors;
+            //    Cur_cts = new();
+            //    Cur_run = Task.Run(() => Start_Lookup_Divisors(Cur_cts.Token));
+            //    await Cur_run;
+            //    divisors = Cur_run.Result;
+            //    if (divisors == (null, 0))
+            //    {
+            //        Cur_run.Dispose();
+            //        SetControls(false);
+            //        return;
+            //    }
+            //    RTx_Output.Text = $"Найдено {divisors.data.Count} делителей\n" +
+            //        $"Время выполнения {divisors.mls}мс" +
+            //        $"Результаты по кнопке \"Вывод\"";
+            //    cur_data = (Data_Type.Divisors, divisors.data);
+            //}
             if (RB_Solver_BarChart.Checked)
             {
                 ulong num = ulong.Parse(Tx_Input.Text);
@@ -370,12 +370,12 @@ namespace WinFormsAppPrimeTens
         private void SetControls(bool isTaskRunning)
         {
             Bt_End.Enabled = isTaskRunning;
-            if (!RB_Solver_Divisors.Checked)
-            {
-                RB_Method_Erat.Enabled = !isTaskRunning;
-                RB_Method_Root.Enabled = !isTaskRunning;
-                RB_Method_Fast.Enabled = !isTaskRunning;
-            }
+            //if (!RB_Solver_Divisors.Checked)
+            //{
+            //    RB_Method_Erat.Enabled = !isTaskRunning;
+            //    RB_Method_Root.Enabled = !isTaskRunning;
+            //    RB_Method_Fast.Enabled = !isTaskRunning;
+            //}
             Tx_Input.Enabled = !isTaskRunning;
             Bt_Start.Enabled = !isTaskRunning;
             if (RB_Solver_MinMaxSeg.Checked || RB_Solver_BarChart.Checked)
@@ -383,10 +383,10 @@ namespace WinFormsAppPrimeTens
                 Tx_Additional_Input.Enabled = !isTaskRunning;
             }
             RB_Solver_BarChart.Enabled = !isTaskRunning;
-            RB_Solver_Divisors.Enabled = !isTaskRunning;
+            //RB_Solver_Divisors.Enabled = !isTaskRunning;
             RB_Solver_MaxSegment.Enabled = !isTaskRunning;
             RB_Solver_MinMaxSeg.Enabled = !isTaskRunning;
-            if (RB_Solver_Divisors.Checked || RB_Solver_BarChart.Checked)
+            if (RB_Solver_BarChart.Checked)
             {
                 Bt_Output.Enabled = !isTaskRunning;
             }
@@ -512,11 +512,11 @@ namespace WinFormsAppPrimeTens
                     Lb_Help.Text = "Поиск наибольшего отрезка не содержащего простых чисел в промежутке [2, n].\r\n" +
                                   $"Входные данные: натуральное число n, в диапазоне [3, {max_num}].";
             }
-            else if (RB_Solver_Divisors.Checked)
-            {
-                Lb_Help.Text = "Поиск всех делителей числа n, включая 1 и n.\r\n" +
-                              $"Входные данные: натуральное число n, в диапазоне [3, {max_num_b}].";
-            }
+            //else if (RB_Solver_Divisors.Checked)
+            //{
+            //    Lb_Help.Text = "Поиск всех делителей числа n, включая 1 и n.\r\n" +
+            //                  $"Входные данные: натуральное число n, в диапазоне [3, {max_num_b}].";
+            //}
             else if (RB_Solver_BarChart.Checked)
             {
                 const int maxSeg = 99999;
@@ -602,9 +602,9 @@ namespace WinFormsAppPrimeTens
             switch (cur_data.disp)
             {
                 case Data_Type.Divisors:
-                    Form formdiv = new Divisor_Output(cur_data.data);
-                    formdiv.Show();
-                    break;
+                    //Form formdiv = new Divisor_Output(cur_data.data);
+                    //formdiv.Show();
+                    //break;
                 case Data_Type.Chart:
                     Form formchart = new Chart_Output(cur_data.data);
                     formchart.Show();
@@ -612,6 +612,12 @@ namespace WinFormsAppPrimeTens
                 default:
                     break;
             }
+        }
+
+        private void btnDivisors_Click(object sender, EventArgs e)
+        {
+            Form formdiv = new Divisor_Output();
+            formdiv.Show();
         }
     }
 }
