@@ -27,29 +27,24 @@ namespace WinFormsAppPrimeTens
             Cur_cts = new CancellationTokenSource();
             if (RB_Solver_MinMaxSeg.Checked)
             {
-                ulong num = ulong.Parse(Tx_Input.Text);
-                int len = int.Parse(Tx_Additional_Input.Text);
-                if (num % (ulong)len != 0)
+                ulong n = ulong.Parse(Tx_Input.Text);
+                ulong k = ulong.Parse(Tx_Additional_Input.Text);
+                if (n % k != 0)
                 {
-                    num = num - (num % (ulong)len);
-                    Tx_Input.Text = num.ToString();
+                    n = n - (n % k);
+                    Tx_Input.Text = n.ToString();
                     SetControls(false);
                     return;
                 }
 
                 if (RB_Method_Erat.Checked)
-                {
                     Cur_run_segments = Task.Run(() => Start_Lookup_Segments(Cur_cts.Token, Prime_Method.Erathosphenes));
-                }
                 else if (RB_Method_Fast.Checked)
-                {
                     Cur_run_segments = Task.Run(() => Start_Lookup_Segments(Cur_cts.Token, Prime_Method.Fast_Lookup));
-                }
                 else
-                {
                     Cur_run_segments = Task.Run(() => Start_Lookup_Segments(Cur_cts.Token, Prime_Method.Division_Lookup));
-                }
                 await Cur_run_segments;
+
                 (ulong min_count, ulong min_loc, ulong max_count, ulong max_loc, long mls) result = Cur_run_segments.Result;
                 if (result == (0, 0, 0, 0, 0))
                 {
@@ -57,28 +52,22 @@ namespace WinFormsAppPrimeTens
                     SetControls(false);
                     return;
                 }
-                RTx_Output.Text = $"Минимальный сегмент {result.min_loc}-{result.min_loc + (ulong)(len - 1)}\n" +
-                    $"Наименьшее число простых чисел {result.min_count}\n" +
-                    $"Максимальный сегмент {result.max_loc}-{result.max_loc + (ulong)(len - 1)}\n" +
-                    $"Максимальное число простых чисел {result.max_count}\n" +
-                    $"Время выполнения {result.mls}мс";
+                RTx_Output.Text = $"Минимальный сегмент {result.min_loc}-{result.min_loc + k - 1}\n" +
+                                  $"Наименьшее число простых чисел {result.min_count}\n" +
+                                  $"Максимальный сегмент {result.max_loc}-{result.max_loc + k - 1}\n" +
+                                  $"Максимальное число простых чисел {result.max_count}\n" +
+                                  $"Время выполнения {result.mls}мс";
             }
             if (RB_Solver_MaxSegment.Checked)
             {
-                Cur_cts = new();
                 if (RB_Method_Erat.Checked)
-                {
                     Cur_run_max_segment = Task.Run(() => Start_Lookup_DivisorlessRange(Cur_cts.Token, Prime_Method.Erathosphenes));
-                }
                 else if (RB_Method_Fast.Checked)
-                {
                     Cur_run_max_segment = Task.Run(() => Start_Lookup_DivisorlessRange(Cur_cts.Token, Prime_Method.Fast_Lookup));
-                }
                 else
-                {
                     Cur_run_max_segment = Task.Run(() => Start_Lookup_DivisorlessRange(Cur_cts.Token, Prime_Method.Division_Lookup));
-                }
                 await Cur_run_max_segment;
+
                 (ulong start, ulong end, long mls) result = Cur_run_max_segment.Result;
                 if (result == (0, 0, 0))
                 {
@@ -87,36 +76,30 @@ namespace WinFormsAppPrimeTens
                     return;
                 }
                 RTx_Output.Text = $"Начало сегмента {result.start}\n" +
-                    $"Конец сегмента {result.end}\n" +
-                    $"Длина сегмента {result.end - result.start}\n" +
-                    $"Время выполнения {result.mls}мс";
+                                  $"Конец сегмента {result.end}\n" +
+                                  $"Длина сегмента {result.end - result.start + 1}\n" +
+                                  $"Время выполнения {result.mls}мс";
             }
             if (RB_Solver_BarChart.Checked)
             {
-                ulong num = ulong.Parse(Tx_Input.Text);
-                int len = int.Parse(Tx_Additional_Input.Text);
-                if (num % (ulong)len != 0)
+                ulong n = ulong.Parse(Tx_Input.Text);
+                ulong k = ulong.Parse(Tx_Additional_Input.Text);
+                if (n % k != 0)
                 {
-                    num = num - (num % (ulong)len);
-                    Tx_Input.Text = num.ToString();
+                    n = n - (n % k);
+                    Tx_Input.Text = n.ToString();
                     SetControls(false);
                     return;
                 }
 
-                Cur_cts = new();
                 if (RB_Method_Erat.Checked)
-                {
                     Cur_run_chart = Task.Run(() => Start_Lookup_Chart(Cur_cts.Token, Prime_Method.Erathosphenes));
-                }
                 else if (RB_Method_Fast.Checked)
-                {
                     Cur_run_chart = Task.Run(() => Start_Lookup_Chart(Cur_cts.Token, Prime_Method.Fast_Lookup));
-                }
                 else
-                {
                     Cur_run_chart = Task.Run(() => Start_Lookup_Chart(Cur_cts.Token, Prime_Method.Division_Lookup));
-                }
                 await Cur_run_chart;
+
                 (List<(ulong start, ulong end, ulong primeCount, double primePercent)> data, long mls) result = Cur_run_chart.Result;
                 if (result == (null, 0))
                 {
@@ -125,7 +108,7 @@ namespace WinFormsAppPrimeTens
                     return;
                 }
                 RTx_Output.Text = $"Время выполнения {result.mls}мс\n" +
-                    $"Результаты по кнопке \"Вывод\"";
+                                  $"Результаты по кнопке \"Вывод\"";
                 cur_data = result.data;
             }
             SetControls(false);
@@ -138,6 +121,7 @@ namespace WinFormsAppPrimeTens
             ulong min_loc = 0, min_count = 0, max_loc = 0, max_count = 0;
             Stopwatch tim = new Stopwatch();
             tim.Start();
+
             dynamic tas;
             if (Meth == Prime_Method.Fast_Lookup)
             {
@@ -158,21 +142,10 @@ namespace WinFormsAppPrimeTens
                 if (tas.Status == TaskStatus.RanToCompletion)
                 {
                     var temp = tas.Result;
-                    if (temp.Item1 is ulong)
-                    {
-                        min_count = temp.Item1;
-                        min_loc = temp.Item2;
-                        max_count = temp.Item3;
-                        max_loc = temp.Item4;
-                    }
-                    else
-                    {
-                        min_count = (ulong)temp.Item1;
-                        min_loc = (ulong)temp.Item2;
-                        max_count = (ulong)temp.Item3;
-                        max_loc = (ulong)temp.Item4;
-                    }
-
+                    min_count = temp.Item1; 
+                    min_loc = temp.Item2;
+                    max_count = temp.Item3;
+                    max_loc = temp.Item4;
                     running = false;
                 }
                 else
@@ -200,6 +173,7 @@ namespace WinFormsAppPrimeTens
             Stopwatch tim = new Stopwatch();
             ulong start = 0, end = 0;
             tim.Start();
+
             dynamic tas;
             if (method == Prime_Method.Fast_Lookup)
             {
@@ -213,22 +187,15 @@ namespace WinFormsAppPrimeTens
                 temp = Task.Run(() => PrimeTens.GetMaxRangeWithoutPrimeNumbers((int)num, method, ct));
                 tas = temp;
             }
+
             bool running = true;
             while (running)
             {
                 if (tas.Status == TaskStatus.RanToCompletion)
                 {
                     var temp = tas.Result;
-                    if (temp.Item1 is ulong)
-                    {
-                        start = temp.Item1;
-                        end = temp.Item2;
-                    }
-                    else
-                    {
-                        start = (ulong)temp.Item1;
-                        end = (ulong)temp.Item2;
-                    }
+                    start = temp.Item1;
+                    end = temp.Item2;
                     running = false;
                 }
                 else
@@ -254,7 +221,10 @@ namespace WinFormsAppPrimeTens
         {
             ulong num = ulong.Parse(Tx_Input.Text);
             int len = int.Parse(Tx_Additional_Input.Text);
-            Stopwatch sw = Stopwatch.StartNew();
+            List<(ulong start, ulong end, ulong primeCount, double primePercent)> data = new();
+            Stopwatch tim = new Stopwatch();
+            tim.Start();
+
             dynamic tas;
             if (method == Prime_Method.Fast_Lookup)
             {
@@ -268,27 +238,18 @@ namespace WinFormsAppPrimeTens
                 tase = Task.Run(() => PrimeTens.GetPrimeDistribution((int)num, len, method, ct));
                 tas = tase;
             }
+
             bool running = true;
             while (running)
             {
                 if (tas.Status == TaskStatus.RanToCompletion)
                 {
                     var temp = tas.Result;
-                    sw.Stop();
-                    List<(ulong start, ulong end, ulong primeCount, double primePercent)> data = new();
-
-                    if (temp[0].Item1 is int)
+                    foreach (var item in temp)
                     {
-                        foreach (var item in temp)
-                        {
-                            data.Add(((ulong)item.Item1, (ulong)item.Item2, (ulong)item.Item3, item.Item4));
-                        }
+                        data.Add((item.Item1, item.Item2, item.Item3, item.Item4));
                     }
-                    else
-                    {
-                        data = temp;
-                    }
-                    return (data, sw.ElapsedMilliseconds);
+                    running = false;
                 }
                 else
                 {
@@ -296,7 +257,7 @@ namespace WinFormsAppPrimeTens
                     {
                         return (null, 0);
                     }
-                    RTx_Output.Invoke(new Action(() => RTx_Output.Text = $"{sw.ElapsedMilliseconds / 1000}.{sw.ElapsedMilliseconds / 100 % 10} с"));
+                    RTx_Output.Invoke(new Action(() => RTx_Output.Text = $"{tim.ElapsedMilliseconds / 1000}.{tim.ElapsedMilliseconds / 100 % 10} с"));
                     Thread.Sleep(5);
                 }
                 if (ct.IsCancellationRequested)
@@ -304,7 +265,9 @@ namespace WinFormsAppPrimeTens
                     return (null, 0);
                 }
             }
-            return (null, 0);
+            tim.Stop();
+            long mls = tim.ElapsedMilliseconds;
+            return (data, mls);
         }
 
         private void Bt_End_Click(object sender, EventArgs e)
@@ -319,9 +282,7 @@ namespace WinFormsAppPrimeTens
             Tx_Input.Enabled = !isTaskRunning;
             Bt_Start.Enabled = !isTaskRunning;
             if (RB_Solver_MinMaxSeg.Checked || RB_Solver_BarChart.Checked)
-            {
                 Tx_Additional_Input.Enabled = !isTaskRunning;
-            }
             RB_Solver_BarChart.Enabled = !isTaskRunning;
             RB_Solver_MaxSegment.Enabled = !isTaskRunning;
             RB_Solver_MinMaxSeg.Enabled = !isTaskRunning;
@@ -329,9 +290,7 @@ namespace WinFormsAppPrimeTens
             RB_Method_Fast.Enabled = !isTaskRunning;
             RB_Method_Root.Enabled = !isTaskRunning;
             if (RB_Solver_BarChart.Checked)
-            {
                 Bt_Output.Enabled = !isTaskRunning;
-            }
         }
 
         bool CheckMainInput()
@@ -376,17 +335,18 @@ namespace WinFormsAppPrimeTens
                 if (RB_Solver_MinMaxSeg.Checked)
                 {
                     if (RB_Method_Fast.Checked)
+                    {
                         if (k > max_num_b)
                         {
                             errorProviderK.SetError(Tx_Additional_Input, "Слишком большое число");
                             return false;
                         }
-                    else
-                        if (k > max_num)
-                        {
-                            errorProviderK.SetError(Tx_Additional_Input, "Слишком большое число");
-                            return false;
-                        }
+                    }
+                    else if (k > max_num)
+                    {
+                        errorProviderK.SetError(Tx_Additional_Input, "Слишком большое число");
+                        return false;
+                    }
                 }
                 else if (RB_Solver_BarChart.Checked)
                 {
@@ -419,22 +379,6 @@ namespace WinFormsAppPrimeTens
             if (!RB_Solver_MaxSegment.Checked)
                 b2 = CheckAdditionalInput();
             Bt_Start.Enabled = b1 && b2;
-        }
-
-        void Methods_State(bool state)
-        {
-            if (state)
-            {
-                RB_Method_Erat.Enabled = true;
-                RB_Method_Root.Enabled = true;
-                RB_Method_Fast.Enabled = true;
-            }
-            else
-            {
-                RB_Method_Erat.Enabled = false;
-                RB_Method_Root.Enabled = false;
-                RB_Method_Fast.Enabled = false;
-            }
         }
 
         void help_determine()
@@ -471,7 +415,6 @@ namespace WinFormsAppPrimeTens
 
         private void RB_Solver_MinMaxSeg_CheckedChanged(object sender, EventArgs e)
         {
-            Methods_State(true);
             Tx_Additional_Input.Enabled = true;
             help_determine();
             Bt_Output.Enabled = false;
@@ -480,7 +423,6 @@ namespace WinFormsAppPrimeTens
 
         private void RB_Solver_MaxSegment_CheckedChanged(object sender, EventArgs e)
         {
-            Methods_State(true);
             Tx_Additional_Input.Enabled = false;
             help_determine();
             Bt_Output.Enabled = false;
@@ -490,7 +432,6 @@ namespace WinFormsAppPrimeTens
 
         private void RB_Solver_BarChart_CheckedChanged(object sender, EventArgs e)
         {
-            Methods_State(true);
             Tx_Additional_Input.Enabled = true;
             help_determine();
             Bt_Output.Enabled = false;

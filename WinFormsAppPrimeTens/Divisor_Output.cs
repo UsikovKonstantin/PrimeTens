@@ -75,6 +75,7 @@ namespace WinFormsAppPrimeTens
         (List<ulong> data, long mls) Start_Lookup_Divisors(CancellationToken ct)
         {
             ulong num = ulong.Parse(tbInput.Text);
+            List<ulong> data = new();
             Stopwatch sw = Stopwatch.StartNew();
             Task<List<ulong>> tas;
             tas = Task.Run(() => PrimeTens.GetDivisors(num, ct));
@@ -83,9 +84,8 @@ namespace WinFormsAppPrimeTens
             {
                 if (tas.Status == TaskStatus.RanToCompletion)
                 {
-                    var temp = tas.Result;
-                    sw.Stop();
-                    return (temp, sw.ElapsedMilliseconds);
+                    data = tas.Result;
+                    running = false;
                 }
                 else
                 {
@@ -101,7 +101,9 @@ namespace WinFormsAppPrimeTens
                     return (null, 0);
                 }
             }
-            return (null, 0);
+            sw.Stop();
+            long mls = sw.ElapsedMilliseconds;
+            return (data, mls);
         }
 
         private void btnStop_Click(object sender, EventArgs e)
