@@ -142,10 +142,10 @@ namespace WinFormsAppPrimeTens
                 if (tas.Status == TaskStatus.RanToCompletion)
                 {
                     var temp = tas.Result;
-                    min_count = temp.Item1; 
-                    min_loc = temp.Item2;
-                    max_count = temp.Item3;
-                    max_loc = temp.Item4;
+                    min_count = (ulong)temp.Item1; 
+                    min_loc = (ulong)temp.Item2;
+                    max_count = (ulong)temp.Item3;
+                    max_loc = (ulong)temp.Item4;
                     running = false;
                 }
                 else
@@ -194,8 +194,8 @@ namespace WinFormsAppPrimeTens
                 if (tas.Status == TaskStatus.RanToCompletion)
                 {
                     var temp = tas.Result;
-                    start = temp.Item1;
-                    end = temp.Item2;
+                    start = (ulong)temp.Item1;
+                    end = (ulong)temp.Item2;
                     running = false;
                 }
                 else
@@ -247,7 +247,7 @@ namespace WinFormsAppPrimeTens
                     var temp = tas.Result;
                     foreach (var item in temp)
                     {
-                        data.Add((item.Item1, item.Item2, item.Item3, item.Item4));
+                        data.Add(((ulong)item.Item1, (ulong)item.Item2, (ulong)item.Item3, (double)item.Item4));
                     }
                     running = false;
                 }
